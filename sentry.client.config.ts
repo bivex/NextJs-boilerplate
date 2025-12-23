@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import * as Spotlight from "@spotlightjs/spotlight";
+import { _init as initSpotlight } from "@spotlightjs/spotlight";
 
 // Initialize Sentry first
 Sentry.init({
@@ -21,5 +21,5 @@ Sentry.init({
 
 // Initialize Spotlight after Sentry (only in development)
 if (process.env.NODE_ENV === "development") {
-  Spotlight.init();
+  initSpotlight();
 }
