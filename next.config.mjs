@@ -13,6 +13,8 @@
  * Commercial licensing available upon request.
  */
 
+import { withSentryConfig } from '@sentry/nextjs';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Enable experimental features
@@ -233,4 +235,15 @@ const nextConfig = {
   compress: true,
 };
 
-export default nextConfig;
+// Conditionally wrap with Sentry configuration
+const configWithSentry = process.env.NEXT_PUBLIC_SENTRY_DSN
+  ? withSentryConfig(nextConfig, {
+      org: 'nextjs-boilerplate-org',
+      project: 'nextjs-boilerplate',
+      tunnelRoute: '/monitoring',
+      widenClientFileUpload: true,
+      hideSourceMaps: true,
+    })
+  : nextConfig;
+
+export default configWithSentry;

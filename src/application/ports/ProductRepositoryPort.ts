@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:25
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -33,10 +33,10 @@ export interface ProductRepositoryPort {
 
   /**
    * Gets a product by its ID
-   * @param id The product ID
+   * @param _id The product ID
    * @returns The product if found, null otherwise
    */
-  getById(id: string): Promise<Product | null>;
+  getById(_id: string): Promise<Product | null>;
 
   /**
    * Gets all features of the product
@@ -46,10 +46,10 @@ export interface ProductRepositoryPort {
 
   /**
    * Gets features filtered by category
-   * @param category The feature category
+   * @param _category The feature category
    * @returns Array of features in the category
    */
-  getFeaturesByCategory(category: FeatureCategory): Promise<Feature[]>;
+  getFeaturesByCategory(_category: FeatureCategory): Promise<Feature[]>;
 
   /**
    * Gets featured/highlighted features for display
@@ -59,7 +59,7 @@ export interface ProductRepositoryPort {
 
   /**
    * Updates product information
-   * @param product The updated product
+   * @param _product The updated product
    */
-  updateProduct(product: Product): Promise<void>;
+  updateProduct(_product: Product): Promise<void>;
 }

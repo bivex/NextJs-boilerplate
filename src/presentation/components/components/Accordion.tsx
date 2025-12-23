@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:23:49
- * Last Updated: 2025-12-23T07:31:25
+ * Last Updated: 2025-12-23T07:49:47
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -15,9 +15,9 @@
 
 'use client';
 
-import React, { ReactNode } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { ChevronDown } from 'lucide-react';
+import React, { ReactNode } from 'react';
 
 interface AccordionItem {
   id: string;

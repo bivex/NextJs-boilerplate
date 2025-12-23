@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:52:13
- * Last Updated: 2025-12-23T07:33:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -22,13 +22,14 @@
 
 'use client';
 
+import { Zap, Shield, Users, ChevronDown, Star, Loader2 } from 'lucide-react';
 import React, { useState, useCallback, memo, lazy, Suspense, useMemo } from 'react';
+
+import { ContactFormDto } from '../../application/dtos/VisitorDto';
+import { AnalyticsEventType } from '../../domain/value-objects/AnalyticsEvent';
 import { Button } from '../components/components';
 import { SimpleThemeSwitcher } from '../components/components/ThemeSwitcher';
 import { useLandingPage } from '../hooks/useLandingPage';
-import { ContactFormDto } from '../../application/dtos/VisitorDto';
-import { AnalyticsEventType } from '../../domain/value-objects/AnalyticsEvent';
-import { Zap, Shield, Users, ChevronDown, Star, Loader2 } from 'lucide-react';
 
 // Type-safe event type helper
 const asAnalyticsEventType = (value: string): AnalyticsEventType => {
@@ -38,7 +39,7 @@ const asAnalyticsEventType = (value: string): AnalyticsEventType => {
   throw new Error(`Invalid AnalyticsEventType: ${value}`);
 };
 
-const LandingPage = memo(function LandingPage() {
+const LandingPage = memo(() => {
   const {
     product,
     visitor,
@@ -451,7 +452,7 @@ const FeaturesSection = memo(({
   product,
   onFeatureHover
 }: {
-  product: { featuredFeatures?: Array<{ id: string; name: string; description: string; icon?: string | undefined }> } | null | undefined;
+  product: { featuredFeatures?: Array<{ id: string; name: string; description: string; icon?: string | undefined }> } | null;
   onFeatureHover: (featureId: string, featureName: string) => void;
 }) => (
   <section id="features" className="mb-20">
@@ -492,7 +493,7 @@ interface ContactFormProps {
   onButtonClick: (buttonName: string) => void;
 }
 
-const ContactForm = memo(function ContactForm({ onSubmit, isSubmitting, result, onButtonClick }: ContactFormProps) {
+const ContactForm = memo(({ onSubmit, isSubmitting, result, onButtonClick }: ContactFormProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -598,3 +599,5 @@ const ContactForm = memo(function ContactForm({ onSubmit, isSubmitting, result, 
     </div>
   );
 });
+
+ContactForm.displayName = 'ContactForm';

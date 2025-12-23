@@ -15,11 +15,12 @@
 
 'use client';
 
-import { Moon, Sun, Monitor } from 'lucide-react';
-import { useTheme } from './ThemeProvider';
-import { Switch } from './Switch';
-import { Button } from './Button';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Moon, Sun, Monitor } from 'lucide-react';
+
+import { Button } from './Button';
+import { Switch } from './Switch';
+import { useTheme } from './ThemeProvider';
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();

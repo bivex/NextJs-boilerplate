@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:24:35
- * Last Updated: 2025-12-23T07:31:25
+ * Last Updated: 2025-12-23T07:49:47
  * Migrated to Radix Themes 3.0: 2025-12-23
  *
  * Licensed under the MIT License.
@@ -16,8 +16,8 @@
 
 'use client';
 
-import React, { ReactNode } from 'react';
 import { Tabs as RadixTabs } from '@radix-ui/themes';
+import React, { ReactNode } from 'react';
 
 interface TabItem {
   id: string;

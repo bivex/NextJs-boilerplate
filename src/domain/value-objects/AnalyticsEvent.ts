@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:00:49
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,11 +21,17 @@
  */
 
 export enum AnalyticsEventType {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   PAGE_VIEW = 'page_view',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   BUTTON_CLICK = 'button_click',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FORM_SUBMIT = 'form_submit',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   SCROLL = 'scroll',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TIME_SPENT = 'time_spent',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   CONVERSION = 'conversion'
 }
 

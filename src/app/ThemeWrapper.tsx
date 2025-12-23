@@ -1,7 +1,24 @@
+/**
+ * Copyright (c) 2025 Bivex
+ *
+ * Author: Bivex
+ * Available for contact via email: support@b-b.top
+ * For up-to-date contact information:
+ * https://github.com/bivex
+ *
+ * Created: 2025-12-23T07:55:12
+ * Last Updated: 2025-12-23T07:58:01
+ *
+ * Licensed under the MIT License.
+ * Commercial licensing available upon request.
+ */
+
 'use client';
 
+import React from 'react';
 import { Theme } from '@radix-ui/themes'
 import Link from 'next/link'
+
 import { ThemeProvider, useTheme } from '../presentation/components/components/ThemeProvider'
 import { SimpleThemeSwitcher } from '../presentation/components/components/ThemeSwitcher'
 

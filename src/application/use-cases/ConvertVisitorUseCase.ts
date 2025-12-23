@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:51:11
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,23 +21,23 @@
  * domain logic, persistence, and side effects.
  */
 
-import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
-import { EmailServicePort } from '../ports/EmailServicePort';
+import { VisitorConvertedEvent } from '../../domain/events/DomainEvents';
+import { ConversionService } from '../../domain/services/ConversionService';
+import { ContactInfo } from '../../domain/value-objects/ContactInfo';
+import { ContactFormDto, ConversionResultDto } from '../dtos/VisitorDto';
 import { AnalyticsPort } from '../ports/AnalyticsPort';
 import { DomainEventPublisherPort } from '../ports/DomainEventPublisherPort';
+import { EmailServicePort } from '../ports/EmailServicePort';
 import { ProductRepositoryPort } from '../ports/ProductRepositoryPort';
-import { ContactFormDto, ConversionResultDto } from '../dtos/VisitorDto';
-import { ContactInfo } from '../../domain/value-objects/ContactInfo';
-import { ConversionService } from '../../domain/services/ConversionService';
-import { VisitorConvertedEvent } from '../../domain/events/DomainEvents';
+import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
 
 export class ConvertVisitorUseCase {
   constructor(
-    private readonly visitorRepository: VisitorRepositoryPort,
-    private readonly emailService: EmailServicePort,
-    private readonly analytics: AnalyticsPort,
-    private readonly eventPublisher: DomainEventPublisherPort,
-    private readonly productRepository: ProductRepositoryPort
+    private readonly _visitorRepository: VisitorRepositoryPort,
+    private readonly _emailService: EmailServicePort,
+    private readonly _analytics: AnalyticsPort,
+    private readonly _eventPublisher: DomainEventPublisherPort,
+    private readonly _productRepository: ProductRepositoryPort
   ) {}
 
   /**
@@ -49,7 +49,7 @@ export class ConvertVisitorUseCase {
   async execute(sessionId: string, contactData: ContactFormDto): Promise<ConversionResultDto> {
     try {
       // Find the visitor
-      const visitor = await this.visitorRepository.findBySessionId(sessionId);
+      const visitor = await this._visitorRepository.findBySessionId(sessionId);
       if (!visitor) {
         throw new Error('Visitor not found');
       }
@@ -71,10 +71,10 @@ export class ConvertVisitorUseCase {
       ConversionService.convertVisitor(visitor, contactInfo, contactData.source);
 
       // Persist the converted visitor
-      await this.visitorRepository.save(visitor);
+      await this._visitorRepository.save(visitor);
 
       // Track conversion analytics
-      await this.analytics.trackConversion({
+      await this._analytics.trackConversion({
         visitorId: visitor.id,
         source: contactData.source,
         value: 100, // Conversion value
@@ -92,11 +92,11 @@ export class ConvertVisitorUseCase {
         contactInfo,
         contactData.source
       );
-      await this.eventPublisher.publish(conversionEvent);
+      await this._eventPublisher.publish(conversionEvent);
 
       // Send welcome email
-      const product = await this.productRepository.getProduct();
-      await this.emailService.sendWelcomeEmail(contactInfo, product.name);
+      const product = await this._productRepository.getProduct();
+      await this._emailService.sendWelcomeEmail(contactInfo, product.name);
 
       return {
         success: true,

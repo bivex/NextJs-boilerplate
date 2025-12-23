@@ -7,16 +7,18 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:58:47
- * Last Updated: 2025-12-23T07:31:25
+ * Last Updated: 2025-12-23T07:49:47
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
 import { Mail } from 'lucide-react';
+import React from 'react';
+
+import { Button } from './Button';
+
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',

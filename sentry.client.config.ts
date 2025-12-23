@@ -6,8 +6,8 @@
  * For up-to-date contact information:
  * https://github.com/bivex
  *
- * Created: 2025-12-23T07:33:21
- * Last Updated: 2025-12-23T07:33:21
+ * Created: 2025-12-23T07:49:38
+ * Last Updated: 2025-12-23T07:59:33
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -36,7 +36,14 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
 }
 
 // Initialize Spotlight after Sentry (only in development)
-// TODO: Re-enable Spotlight integration
-// if (process.env.NODE_ENV === "development") {
-//   import("@spotlightjs/spotlight").then(({ _init }) => _init());
+// Note: Spotlight initialization temporarily disabled due to SDK compatibility issues
+// TODO: Re-enable once SDK export structure is clarified
+// if (process.env.NODE_ENV === 'development') {
+//   import('@spotlightjs/spotlight/sdk').then((spotlight) => {
+//     if (spotlight.init) {
+//       spotlight.init();
+//     }
+//   }).catch((error) => {
+//     console.warn('Failed to initialize Spotlight:', error);
+//   });
 // }

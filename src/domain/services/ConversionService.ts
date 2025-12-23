@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:00:46
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,8 +21,8 @@
  */
 
 import { Visitor } from '../entities/Visitor';
-import { ContactInfo } from '../value-objects/ContactInfo';
 import { AnalyticsEvent, AnalyticsEventType } from '../value-objects/AnalyticsEvent';
+import { ContactInfo } from '../value-objects/ContactInfo';
 
 export class ConversionService {
   /**

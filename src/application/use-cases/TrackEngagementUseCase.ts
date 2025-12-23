@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:21
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -20,11 +20,11 @@
  * This use case processes user interactions and updates visitor engagement state.
  */
 
-import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
+import { VisitorEngagementMilestoneEvent } from '../../domain/events/DomainEvents';
+import { AnalyticsEvent, AnalyticsEventType } from '../../domain/value-objects/AnalyticsEvent';
 import { AnalyticsPort } from '../ports/AnalyticsPort';
 import { DomainEventPublisherPort } from '../ports/DomainEventPublisherPort';
-import { AnalyticsEvent, AnalyticsEventType } from '../../domain/value-objects/AnalyticsEvent';
-import { VisitorEngagementMilestoneEvent } from '../../domain/events/DomainEvents';
+import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
 
 export interface EngagementEventDto {
   type: AnalyticsEventType;
@@ -36,9 +36,9 @@ export interface EngagementEventDto {
 
 export class TrackEngagementUseCase {
   constructor(
-    private readonly visitorRepository: VisitorRepositoryPort,
-    private readonly analytics: AnalyticsPort,
-    private readonly eventPublisher: DomainEventPublisherPort
+    private readonly _visitorRepository: VisitorRepositoryPort,
+    private readonly _analytics: AnalyticsPort,
+    private readonly _eventPublisher: DomainEventPublisherPort
   ) {}
 
   /**
@@ -49,11 +49,11 @@ export class TrackEngagementUseCase {
   async execute(sessionId: string, eventData: EngagementEventDto): Promise<void> {
     try {
       // Find the visitor
-      const visitor = await this.visitorRepository.findBySessionId(sessionId);
+      const visitor = await this._visitorRepository.findBySessionId(sessionId);
       if (!visitor) {
         // Create anonymous visitor if not found
-        const newVisitor = await this.visitorRepository.create(sessionId);
-        await this.visitorRepository.save(newVisitor);
+        const newVisitor = await this._visitorRepository.create(sessionId);
+        await this._visitorRepository.save(newVisitor);
         return; // Don't track events for newly created visitors
       }
 
@@ -70,10 +70,10 @@ export class TrackEngagementUseCase {
       visitor.addEngagementEvent(analyticsEvent);
 
       // Save visitor with updated engagement
-      await this.visitorRepository.save(visitor);
+      await this._visitorRepository.save(visitor);
 
       // Track in analytics system
-      await this.analytics.trackEvent(analyticsEvent);
+      await this._analytics.trackEvent(analyticsEvent);
 
       // Check for engagement milestones
       await this.checkEngagementMilestones(visitor);
@@ -107,7 +107,7 @@ export class TrackEngagementUseCase {
           milestone.name,
           engagementScore
         );
-        await this.eventPublisher.publish(milestoneEvent);
+        await this._eventPublisher.publish(milestoneEvent);
       }
     }
   }

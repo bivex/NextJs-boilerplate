@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:17
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -20,13 +20,17 @@
  * Tracks engagement and potential conversion.
  */
 
-import { ContactInfo } from '../value-objects/ContactInfo';
 import { AnalyticsEvent } from '../value-objects/AnalyticsEvent';
+import { ContactInfo } from '../value-objects/ContactInfo';
 
 export enum VisitorStatus {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ANONYMOUS = 'anonymous',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ENGAGED = 'engaged',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   CONVERTED = 'converted',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   BOUNCED = 'bounced'
 }
 

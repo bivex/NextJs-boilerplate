@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:12:43
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:55:10
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -18,6 +18,26 @@
 
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+// Mock Next.js navigation (App Router)
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+      replace: jest.fn(),
+      refresh: jest.fn(),
+      back: jest.fn(),
+      forward: jest.fn(),
+      prefetch: jest.fn(),
+    };
+  },
+  useSearchParams() {
+    return new URLSearchParams();
+  },
+  usePathname() {
+    return '/';
+  },
+}));
 
 // Mock Next.js router
 jest.mock('next/router', () => ({
@@ -39,26 +59,6 @@ jest.mock('next/router', () => ({
         emit: jest.fn(),
       },
     };
-  },
-}));
-
-// Mock Next.js navigation (App Router)
-jest.mock('next/navigation', () => ({
-  useRouter() {
-    return {
-      push: jest.fn(),
-      replace: jest.fn(),
-      refresh: jest.fn(),
-      back: jest.fn(),
-      forward: jest.fn(),
-      prefetch: jest.fn(),
-    };
-  },
-  useSearchParams() {
-    return new URLSearchParams();
-  },
-  usePathname() {
-    return '/';
   },
 }));
 

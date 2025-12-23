@@ -13,8 +13,9 @@
  * Commercial licensing available upon request.
  */
 
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
+
 import { ErrorBoundary } from './ErrorBoundary';
 
 const originalEnv = process.env.NODE_ENV;

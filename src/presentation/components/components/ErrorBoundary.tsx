@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T07:35:00
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -15,9 +15,10 @@
 
 'use client';
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Button } from './Button';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+
+import { Button } from './Button';
 
 // Import Sentry for error reporting to Spotlight
 let Sentry: any = null;

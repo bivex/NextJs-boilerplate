@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:25
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -26,31 +26,31 @@ import { ContactInfo } from '../../domain/value-objects/ContactInfo';
 export interface EmailServicePort {
   /**
    * Sends a welcome email to a converted visitor
-   * @param contactInfo The contact information of the recipient
-   * @param productName The name of the product they're interested in
+   * @param _contactInfo The contact information of the recipient
+   * @param _productName The name of the product they're interested in
    */
-  sendWelcomeEmail(contactInfo: ContactInfo, productName: string): Promise<void>;
+  sendWelcomeEmail(_contactInfo: ContactInfo, _productName: string): Promise<void>;
 
   /**
    * Sends a contact form submission notification
-   * @param contactInfo The contact information from the form
-   * @param additionalData Any additional data from the form
+   * @param _contactInfo The contact information from the form
+   * @param _additionalData Any additional data from the form
    */
   sendContactNotification(
-    contactInfo: ContactInfo,
-    additionalData?: Record<string, any>
+    _contactInfo: ContactInfo,
+    _additionalData?: Record<string, any>
   ): Promise<void>;
 
   /**
    * Sends a newsletter signup confirmation
-   * @param email The email address that signed up
+   * @param _email The email address that signed up
    */
-  sendNewsletterConfirmation(email: string): Promise<void>;
+  sendNewsletterConfirmation(_email: string): Promise<void>;
 
   /**
    * Validates if an email address is deliverable
-   * @param email The email address to validate
+   * @param _email The email address to validate
    * @returns true if the email appears valid and deliverable
    */
-  validateEmail(email: string): Promise<boolean>;
+  validateEmail(_email: string): Promise<boolean>;
 }

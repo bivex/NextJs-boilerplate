@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:50:43
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -26,22 +26,22 @@ import { AnalyticsEvent } from '../../domain/value-objects/AnalyticsEvent';
 export interface AnalyticsPort {
   /**
    * Tracks an analytics event
-   * @param event The analytics event to track
+   * @param _event The analytics event to track
    */
-  trackEvent(event: AnalyticsEvent): Promise<void>;
+  trackEvent(_event: AnalyticsEvent): Promise<void>;
 
   /**
    * Tracks a page view
-   * @param pageUrl The URL of the page being viewed
-   * @param visitorId Optional visitor identifier
+   * @param _pageUrl The URL of the page being viewed
+   * @param _visitorId Optional visitor identifier
    */
-  trackPageView(pageUrl: string, visitorId?: string): Promise<void>;
+  trackPageView(_pageUrl: string, _visitorId?: string): Promise<void>;
 
   /**
    * Tracks a conversion event
-   * @param conversionData Data about the conversion
+   * @param _conversionData Data about the conversion
    */
-  trackConversion(conversionData: {
+  trackConversion(_conversionData: {
     visitorId: string;
     source: string;
     value?: number;
@@ -50,10 +50,10 @@ export interface AnalyticsPort {
 
   /**
    * Gets analytics data for reporting
-   * @param dateRange Date range for the analytics data
+   * @param _dateRange Date range for the analytics data
    * @returns Analytics summary data
    */
-  getAnalyticsSummary(dateRange: { start: Date; end: Date }): Promise<{
+  getAnalyticsSummary(_dateRange: { start: Date; end: Date }): Promise<{
     totalVisitors: number;
     totalConversions: number;
     conversionRate: number;

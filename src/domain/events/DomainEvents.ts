@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:16
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -40,7 +40,9 @@ export class VisitorConvertedEvent implements DomainEvent {
 
   constructor(
     public readonly visitor: Visitor,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public readonly contactInfo: ContactInfo,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public readonly conversionSource: string
   ) {
     this.eventId = `visitor-converted-${visitor.id}-${Date.now()}`;
@@ -59,6 +61,7 @@ export class VisitorEngagementMilestoneEvent implements DomainEvent {
   constructor(
     public readonly visitor: Visitor,
     public readonly milestone: string, // e.g., 'first_click', 'form_view', 'high_engagement'
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public readonly engagementScore: number
   ) {
     this.eventId = `engagement-milestone-${visitor.id}-${milestone}-${Date.now()}`;
@@ -78,6 +81,7 @@ export class ProductFeatureViewedEvent implements DomainEvent {
     public readonly visitorId: string,
     public readonly productId: string,
     public readonly featureId: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public readonly featureName: string
   ) {
     this.eventId = `feature-viewed-${visitorId}-${featureId}-${Date.now()}`;

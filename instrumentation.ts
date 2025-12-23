@@ -6,8 +6,8 @@
  * For up-to-date contact information:
  * https://github.com/bivex
  *
- * Created: 2025-12-23T07:33:19
- * Last Updated: 2025-12-23T07:33:19
+ * Created: 2025-12-23T07:49:35
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -16,12 +16,30 @@
 import * as Sentry from "@sentry/nextjs";
 
 export async function register() {
-  // Initialize Sentry with separate configs for Node.js and Edge runtime
-  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+  // Only initialize Sentry if DSN is provided
+  if (!process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    return;
+  }
+
+  // Initialize Sentry based on runtime environment
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    // Node.js runtime configuration
     Sentry.init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-      spotlight: process.env.NODE_ENV === 'development', // Enables Spotlight in dev
-      tracesSampleRate: 1.0,
+      spotlight: process.env.NODE_ENV === 'development',
+      tracesSampleRate: 1,
+      debug: false,
+      environment: process.env.NODE_ENV,
+    });
+  }
+
+  if (process.env.NEXT_RUNTIME === 'edge') {
+    // Edge runtime configuration
+    Sentry.init({
+      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+      spotlight: process.env.NODE_ENV === 'development',
+      tracesSampleRate: 1,
+      debug: false,
       environment: process.env.NODE_ENV,
     });
   }

@@ -7,14 +7,15 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:58:47
- * Last Updated: 2025-12-23T07:31:25
+ * Last Updated: 2025-12-23T07:49:47
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+
 import { Button } from './Button';
 
 describe('Button', () => {

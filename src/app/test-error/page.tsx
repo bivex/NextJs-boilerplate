@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T07:50:00
- * Last Updated: 2025-12-23T07:31:25
+ * Last Updated: 2025-12-23T07:49:47
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -16,6 +16,7 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { Button } from '../../presentation/components/components/Button';
 import { ErrorBoundary } from '../../presentation/components/components/ErrorBoundary';
 import {
@@ -179,9 +180,9 @@ const SafeExecuteComponent = () => {
     );
 
     if (result.success) {
-      setResult('Success: ' + result.data);
+      setResult(`Success: ${  result.data}`);
     } else {
-      setResult('Error handled: ' + result.error.message);
+      setResult(`Error handled: ${  result.error.message}`);
     }
   };
 

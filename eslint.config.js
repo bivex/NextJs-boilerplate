@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:12:45
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -51,9 +51,15 @@ const eslintConfig = [
     ],
   },
 
-  // TypeScript configuration
+  // TypeScript configuration (excluding test and story files)
   {
     files: ['**/*.{ts,tsx}'],
+    ignores: [
+      '**/*.stories.tsx',
+      '**/*.test.tsx',
+      '**/*.spec.tsx',
+      '.storybook/**',
+    ],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -140,7 +146,21 @@ const eslintConfig = [
 
   // Test files
   {
-    files: ['**/__tests__/**/*', '**/*.{test,spec}.{ts,tsx,js,jsx}'],
+    files: ['**/__tests__/**/*', '**/*.{test,spec}.{ts,tsx,js,jsx}', 'jest.setup.js', 'jest.polyfills.js'],
+    languageOptions: {
+      globals: {
+        jest: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        global: 'readonly',
+      },
+    },
     plugins: {
       'testing-library': testingLibrary,
     },

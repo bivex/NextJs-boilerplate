@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:45:00
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:47
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -46,20 +46,19 @@ export function ThemeProvider({
   defaultTheme = 'system',
   storageKey = 'theme',
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
-
-  useEffect(() => {
-    // Load theme from localStorage
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Load theme from localStorage on initialization
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored && ['light', 'dark', 'system'].includes(stored)) {
-        setTheme(stored as Theme);
+        return stored as Theme;
       }
     } catch (error) {
       console.warn('Failed to load theme from localStorage:', error);
     }
-  }, [storageKey]);
+    return defaultTheme;
+  });
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
     const updateResolvedTheme = () => {

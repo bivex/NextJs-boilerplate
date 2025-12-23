@@ -7,13 +7,14 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:29
- * Last Updated: 2025-12-23T07:31:25
+ * Last Updated: 2025-12-23T07:55:17
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
 import React from 'react';
+
 import LandingPage from '../presentation/pages/LandingPage'
 
 export default function Home() {

@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:36:55
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  * Migrated to Radix Themes 3.0: 2025-12-23
  *
  * Licensed under the MIT License.
@@ -16,9 +16,9 @@
 
 'use client';
 
-import React, { forwardRef } from 'react';
 import { Button as RadixButton } from '@radix-ui/themes';
 import { Loader2 } from 'lucide-react';
+import React, { forwardRef } from 'react';
 
 export interface ButtonProps extends React.ComponentProps<typeof RadixButton> {
   loading?: boolean;

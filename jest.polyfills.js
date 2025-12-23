@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:12:44
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:56:53
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -17,19 +17,9 @@
 
 // Polyfills for jsdom environment
 
-// TextEncoder/TextDecoder
-const { TextEncoder, TextDecoder } = require('util');
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
-// URL
-const { URL, URLSearchParams } = require('url');
-global.URL = URL;
-global.URLSearchParams = URLSearchParams;
-
-// AbortController
-const { AbortController } = require('abort-controller');
-global.AbortController = AbortController;
+// crypto
+const crypto = require('crypto').webcrypto;
+global.crypto = crypto;
 
 // fetch
 const fetch = require('node-fetch');
@@ -38,9 +28,15 @@ global.Request = fetch.Request;
 global.Response = fetch.Response;
 global.Headers = fetch.Headers;
 
-// Web Crypto API
-const crypto = require('crypto').webcrypto;
-global.crypto = crypto;
+// TextEncoder/TextDecoder
+const { TextDecoder, TextEncoder } = require('util');
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+// URL
+const { URL, URLSearchParams } = require('url');
+global.URL = URL;
+global.URLSearchParams = URLSearchParams;
 
 // Performance API
 global.performance = {

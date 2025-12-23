@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:51:03
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -20,17 +20,17 @@
  * This is the main use case for the landing page functionality.
  */
 
-import { ProductRepositoryPort } from '../ports/ProductRepositoryPort';
-import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
-import { AnalyticsPort } from '../ports/AnalyticsPort';
 import { ProductDto, ProductSummaryDto } from '../dtos/ProductDto';
 import { VisitorDto } from '../dtos/VisitorDto';
+import { AnalyticsPort } from '../ports/AnalyticsPort';
+import { ProductRepositoryPort } from '../ports/ProductRepositoryPort';
+import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
 
 export class DisplayLandingPageUseCase {
   constructor(
-    private readonly productRepository: ProductRepositoryPort,
-    private readonly visitorRepository: VisitorRepositoryPort,
-    private readonly analytics: AnalyticsPort
+    private readonly _productRepository: ProductRepositoryPort,
+    private readonly _visitorRepository: VisitorRepositoryPort,
+    private readonly _analytics: AnalyticsPort
   ) {}
 
   /**
@@ -44,19 +44,19 @@ export class DisplayLandingPageUseCase {
     visitor: VisitorDto;
   }> {
     // Get or create visitor
-    let visitor = await this.visitorRepository.findBySessionId(sessionId);
+    let visitor = await this._visitorRepository.findBySessionId(sessionId);
     if (!visitor) {
-      visitor = await this.visitorRepository.create(sessionId);
+      visitor = await this._visitorRepository.create(sessionId);
     }
 
     // Track page view
-    await this.analytics.trackPageView(pageUrl, visitor.id);
+    await this._analytics.trackPageView(pageUrl, visitor.id);
 
     // Get product information
-    const product = await this.productRepository.getProduct();
+    const product = await this._productRepository.getProduct();
 
     // Convert to DTOs
-    const featuredFeatures = await this.productRepository.getFeaturedFeatures();
+    const featuredFeatures = await this._productRepository.getFeaturedFeatures();
     const featuredFeaturesDto = featuredFeatures.map(feature => ({
       id: feature.id,
       name: feature.name,

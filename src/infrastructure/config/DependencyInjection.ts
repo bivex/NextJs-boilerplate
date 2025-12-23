@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:07
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -20,23 +20,23 @@
  * This is where all the ports are wired to their adapter implementations.
  */
 
-import { DisplayLandingPageUseCase } from '../../application/use-cases/DisplayLandingPageUseCase';
-import { ConvertVisitorUseCase } from '../../application/use-cases/ConvertVisitorUseCase';
-import { TrackEngagementUseCase } from '../../application/use-cases/TrackEngagementUseCase';
 
-// Ports
-import { VisitorRepositoryPort } from '../../application/ports/VisitorRepositoryPort';
-import { ProductRepositoryPort } from '../../application/ports/ProductRepositoryPort';
+// Ports and Use Cases
 import { AnalyticsPort } from '../../application/ports/AnalyticsPort';
-import { EmailServicePort } from '../../application/ports/EmailServicePort';
+import { ConvertVisitorUseCase } from '../../application/use-cases/ConvertVisitorUseCase';
+import { DisplayLandingPageUseCase } from '../../application/use-cases/DisplayLandingPageUseCase';
 import { DomainEventPublisherPort } from '../../application/ports/DomainEventPublisherPort';
+import { EmailServicePort } from '../../application/ports/EmailServicePort';
+import { ProductRepositoryPort } from '../../application/ports/ProductRepositoryPort';
+import { TrackEngagementUseCase } from '../../application/use-cases/TrackEngagementUseCase';
+import { VisitorRepositoryPort } from '../../application/ports/VisitorRepositoryPort';
 
 // Adapters
-import { InMemoryVisitorRepository } from '../adapters/InMemoryVisitorRepository';
-import { InMemoryProductRepository } from '../adapters/InMemoryProductRepository';
 import { ConsoleAnalyticsAdapter } from '../adapters/ConsoleAnalyticsAdapter';
 import { ConsoleEmailServiceAdapter } from '../adapters/ConsoleEmailServiceAdapter';
 import { InMemoryDomainEventPublisher } from '../adapters/InMemoryDomainEventPublisher';
+import { InMemoryProductRepository } from '../adapters/InMemoryProductRepository';
+import { InMemoryVisitorRepository } from '../adapters/InMemoryVisitorRepository';
 
 /**
  * Dependency Injection Container

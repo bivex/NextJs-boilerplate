@@ -8,12 +8,13 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:36:55
- * Last Updated: 2025-12-23T07:31:24
+ * Last Updated: 2025-12-23T07:49:46
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
+/* eslint-disable no-console */
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -45,7 +46,7 @@ function bumpVersion(type) {
   const newVersion = versionParts.join('.');
   packageJson.version = newVersion;
 
-  fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + '\n');
+  fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)  }\n`);
 
   console.log(`Version bumped from ${currentVersion} to ${newVersion}`);
 
