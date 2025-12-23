@@ -35,7 +35,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     return (
-      <RadixButton ref={ref} disabled={isDisabled} {...props}>
+      <RadixButton
+        ref={ref}
+        disabled={isDisabled}
+        className={`min-h-[44px] ${props.className || ''}`}
+        {...props}
+      >
         {loading && (
           <Loader2
             className="mr-2 h-4 w-4 animate-spin"

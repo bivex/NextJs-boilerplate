@@ -162,7 +162,7 @@ const LandingPage = memo(() => {
 
         {/* Interactive Demo */}
         <section id="components" className="mb-20">
-          <div className="mb-12 text-center">
+          <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
               Interactive Components
             </h2>
@@ -247,7 +247,7 @@ const LandingPage = memo(() => {
         />
 
         {/* Footer */}
-        <footer className="mt-20 border-t border-gray-200/50 pt-12">
+        <footer className="mt-20 border-t border-gray-200/50 pt-16">
           <div className="text-center">
             <div className="mb-4 flex items-center justify-center space-x-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
@@ -257,7 +257,7 @@ const LandingPage = memo(() => {
                 {product?.name || 'NextBoilerplate'}
               </span>
             </div>
-            <p className="mx-auto mb-12 max-w-3xl text-gray-600">
+            <p className="mx-auto mb-16 max-w-3xl text-gray-600">
               Built with modern web technologies for enterprise applications.
               Open source and ready for production.
             </p>
@@ -319,7 +319,7 @@ const HeroSection = memo(
             Boilerplate
           </span>
         </h1>
-        <p className="mx-auto mb-16 max-w-5xl text-xl leading-relaxed text-gray-600 md:text-2xl">
+        <p className="mx-auto mb-20 max-w-5xl text-xl leading-relaxed text-gray-600 md:text-2xl">
           {productDescription}
         </p>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -371,7 +371,7 @@ const Navigation = memo(
     onButtonClick: (_buttonName: string) => void;
   }) => (
     <nav className="relative z-10 border-b border-white/20 bg-white/80 backdrop-blur-sm">
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600">
@@ -423,7 +423,7 @@ Navigation.displayName = 'Navigation';
 // Tech Stack Section Component
 const TechStackSection = memo(() => (
   <section className="mb-20">
-    <div className="mb-12 text-center">
+    <div className="mb-16 text-center">
       <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
         Built with Modern Tech Stack
       </h2>
@@ -490,7 +490,7 @@ const FeaturesSection = memo(
     onFeatureHover: (_featureId: string, _featureName: string) => void;
   }) => (
     <section id="features" className="mb-20">
-      <div className="mb-12 text-center">
+      <div className="mb-16 text-center">
         <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
           Production-Ready Features
         </h2>
@@ -556,10 +556,10 @@ const ContactForm = memo(
     };
 
     return (
-      <div className="mx-auto max-w-sm">
+      <div className="mx-auto max-w-64">
         <Button
           onClick={() => onButtonClick('open_contact_dialog')}
-          className="transform bg-gradient-to-r from-purple-500 to-blue-500 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-purple-600 hover:to-blue-600 hover:shadow-xl"
+          className="transform bg-gradient-to-r from-purple-600 to-blue-600 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-purple-700 hover:to-blue-700 hover:shadow-xl"
           size="3"
           variant="solid"
           disabled={isSubmitting}
