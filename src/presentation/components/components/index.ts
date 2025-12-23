@@ -37,7 +37,6 @@ export { TabNav } from './TabNav';
 // Layout components
 export { Box, Flex, Grid, Section, Container } from './Layout';
 
-
 // Additional Radix UI components
 export { Toast } from './Toast';
 export { Input } from './Input';

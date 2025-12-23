@@ -26,7 +26,12 @@ export class ContactInfo {
   private readonly _message: string | undefined;
   private readonly _company: string | undefined;
 
-  constructor(email: string, name?: string, message?: string, company?: string) {
+  constructor(
+    email: string,
+    name?: string,
+    message?: string,
+    company?: string
+  ) {
     this.validateContactInfo(email, name, message, company);
 
     this._email = email.toLowerCase().trim();

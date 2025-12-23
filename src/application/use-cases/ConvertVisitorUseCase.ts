@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:51:11
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:23:49
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -32,13 +32,25 @@ import { ProductRepositoryPort } from '../ports/ProductRepositoryPort';
 import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
 
 export class ConvertVisitorUseCase {
+  private visitorRepository: VisitorRepositoryPort;
+  private emailService: EmailServicePort;
+  private analytics: AnalyticsPort;
+  private eventPublisher: DomainEventPublisherPort;
+  private productRepository: ProductRepositoryPort;
+
   constructor(
-    private readonly _visitorRepository: VisitorRepositoryPort,
-    private readonly _emailService: EmailServicePort,
-    private readonly _analytics: AnalyticsPort,
-    private readonly _eventPublisher: DomainEventPublisherPort,
-    private readonly _productRepository: ProductRepositoryPort
-  ) {}
+    visitorRepository: VisitorRepositoryPort,
+    emailService: EmailServicePort,
+    analytics: AnalyticsPort,
+    eventPublisher: DomainEventPublisherPort,
+    productRepository: ProductRepositoryPort
+  ) {
+    this.visitorRepository = visitorRepository;
+    this.emailService = emailService;
+    this.analytics = analytics;
+    this.eventPublisher = eventPublisher;
+    this.productRepository = productRepository;
+  }
 
   /**
    * Executes the visitor conversion use case
@@ -46,10 +58,13 @@ export class ConvertVisitorUseCase {
    * @param contactData The contact form data
    * @returns Conversion result
    */
-  async execute(sessionId: string, contactData: ContactFormDto): Promise<ConversionResultDto> {
+  async execute(
+    sessionId: string,
+    contactData: ContactFormDto
+  ): Promise<ConversionResultDto> {
     try {
       // Find the visitor
-      const visitor = await this._visitorRepository.findBySessionId(sessionId);
+      const visitor = await this.visitorRepository.findBySessionId(sessionId);
       if (!visitor) {
         throw new Error('Visitor not found');
       }
@@ -68,13 +83,17 @@ export class ConvertVisitorUseCase {
       );
 
       // Apply domain logic for conversion
-      ConversionService.convertVisitor(visitor, contactInfo, contactData.source);
+      ConversionService.convertVisitor(
+        visitor,
+        contactInfo,
+        contactData.source
+      );
 
       // Persist the converted visitor
-      await this._visitorRepository.save(visitor);
+      await this.visitorRepository.save(visitor);
 
       // Track conversion analytics
-      await this._analytics.trackConversion({
+      await this.analytics.trackConversion({
         visitorId: visitor.id,
         source: contactData.source,
         value: 100, // Conversion value
@@ -82,8 +101,8 @@ export class ConvertVisitorUseCase {
           email: contactInfo.email,
           hasName: contactInfo.hasName(),
           hasMessage: contactInfo.hasMessage(),
-          hasCompany: contactInfo.hasCompany()
-        }
+          hasCompany: contactInfo.hasCompany(),
+        },
       });
 
       // Publish domain event
@@ -92,11 +111,11 @@ export class ConvertVisitorUseCase {
         contactInfo,
         contactData.source
       );
-      await this._eventPublisher.publish(conversionEvent);
+      await this.eventPublisher.publish(conversionEvent);
 
       // Send welcome email
-      const product = await this._productRepository.getProduct();
-      await this._emailService.sendWelcomeEmail(contactInfo, product.name);
+      const product = await this.productRepository.getProduct();
+      await this.emailService.sendWelcomeEmail(contactInfo, product.name);
 
       return {
         success: true,
@@ -105,13 +124,12 @@ export class ConvertVisitorUseCase {
         nextSteps: [
           'Check your email for next steps',
           'Join our community',
-          'Start building with NextBoilerplate'
-        ]
+          'Start building with NextBoilerplate',
+        ],
       };
-
     } catch (error) {
       // Log error and return failure result
-      console.error('Conversion failed:', error);
+      // console.error('Conversion failed:', error);
 
       return {
         success: false,
@@ -119,8 +137,8 @@ export class ConvertVisitorUseCase {
         message: error instanceof Error ? error.message : 'Conversion failed',
         nextSteps: [
           'Please check your information and try again',
-          'Contact support if the problem persists'
-        ]
+          'Contact support if the problem persists',
+        ],
       };
     }
   }

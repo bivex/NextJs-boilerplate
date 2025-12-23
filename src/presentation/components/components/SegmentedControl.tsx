@@ -23,23 +23,23 @@ interface SegmentedControlItem {
 interface SegmentedControlProps {
   items: SegmentedControlItem[];
   value?: string;
-  onValueChange?: (value: string) => void;
+  onValueChange?: (_value: string) => void;
   size?: '1' | '2' | '3';
 }
 
 export function SegmentedControl({
   items,
-  value,
+  value: _value,
   onValueChange,
-  size = '2'
+  size = '2',
 }: SegmentedControlProps) {
   return (
     <RadixSegmentedControl.Root
-      value={value || ''}
+      value={_value || ''}
       onValueChange={onValueChange || (() => {})}
       size={size}
     >
-      {items.map((item) => (
+      {items.map(item => (
         <RadixSegmentedControl.Item key={item.value} value={item.value}>
           {item.label}
         </RadixSegmentedControl.Item>

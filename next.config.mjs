@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:41:47
- * Last Updated: 2025-12-23T06:12:42
+ * Last Updated: 2025-12-23T08:55:53
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -58,9 +58,12 @@ const nextConfig = {
   // Compiler options
   compiler: {
     // Remove console logs in production
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn']
-    } : false,
+    removeConsole:
+      process.env.NODE_ENV === 'production'
+        ? {
+            exclude: ['error', 'warn'],
+          }
+        : false,
   },
 
   // Bundle analyzer (only when ANALYZE=true)
@@ -137,7 +140,8 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
+            value:
+              'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
           },
         ],
       },

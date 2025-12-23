@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:52:56
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:26:23
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,16 +21,16 @@
  */
 
 export enum FeatureCategory {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   MODERN_STACK = 'modern-stack',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   TYPE_SAFETY = 'type-safety',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   ACCESSIBLE_UI = 'accessible-ui',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   PRODUCTION_READY = 'production-ready',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  DEVELOPER_EXPERIENCE = 'developer-experience'
+  // eslint-disable-next-line no-unused-vars
+  DEVELOPER_EXPERIENCE = 'developer-experience',
 }
 
 export class Feature {

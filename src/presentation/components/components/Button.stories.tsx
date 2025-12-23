@@ -19,7 +19,6 @@ import React from 'react';
 
 import { Button } from './Button';
 
-
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
   component: Button,
@@ -27,7 +26,8 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile button component with multiple variants, sizes, and states.',
+        component:
+          'A versatile button component with multiple variants, sizes, and states.',
       },
     },
   },
@@ -87,12 +87,8 @@ export const Sizes: Story = {
 export const WithIcons: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <Button leftIcon={<Mail className="h-4 w-4" />}>
-        Email
-      </Button>
-      <Button rightIcon={<Mail className="h-4 w-4" />}>
-        Send Mail
-      </Button>
+      <Button leftIcon={<Mail className="h-4 w-4" />}>Email</Button>
+      <Button rightIcon={<Mail className="h-4 w-4" />}>Send Mail</Button>
     </div>
   ),
 };

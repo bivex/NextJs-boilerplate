@@ -20,23 +20,21 @@
 // crypto
 const crypto = require('crypto').webcrypto;
 global.crypto = crypto;
+// URL
+const { URL, URLSearchParams } = require('url');
+global.URL = URL;
+global.URLSearchParams = URLSearchParams;
+// TextEncoder/TextDecoder
+const { TextDecoder, TextEncoder } = require('util');
 
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
 // fetch
 const fetch = require('node-fetch');
 global.fetch = fetch;
 global.Request = fetch.Request;
 global.Response = fetch.Response;
 global.Headers = fetch.Headers;
-
-// TextEncoder/TextDecoder
-const { TextDecoder, TextEncoder } = require('util');
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
-// URL
-const { URL, URLSearchParams } = require('url');
-global.URL = URL;
-global.URLSearchParams = URLSearchParams;
 
 // Performance API
 global.performance = {

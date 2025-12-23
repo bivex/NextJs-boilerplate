@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:00:49
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:24:03
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,21 +21,25 @@
  */
 
 export enum AnalyticsEventType {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   PAGE_VIEW = 'page_view',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   BUTTON_CLICK = 'button_click',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   FORM_SUBMIT = 'form_submit',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   SCROLL = 'scroll',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   TIME_SPENT = 'time_spent',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  CONVERSION = 'conversion'
+  // eslint-disable-next-line no-unused-vars
+  CONVERSION = 'conversion',
 }
 
 export const AnalyticsEventTypeValues = Object.values(AnalyticsEventType);
+
+export interface TimeSpentMetadata {
+  duration?: number;
+}
 
 export class AnalyticsEvent {
   private readonly _type: AnalyticsEventType;
@@ -43,14 +47,14 @@ export class AnalyticsEvent {
   private readonly _elementId: string | undefined;
   private readonly _elementName: string | undefined;
   private readonly _pageUrl: string;
-  private readonly _metadata: Record<string, any> | undefined;
+  private readonly _metadata: Record<string, unknown> | undefined;
 
   constructor(
     type: AnalyticsEventType,
     pageUrl: string,
     elementId?: string,
     elementName?: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ) {
     this.validateEventData(type, pageUrl);
 
@@ -83,7 +87,7 @@ export class AnalyticsEvent {
     return this._pageUrl;
   }
 
-  get metadata(): Record<string, any> | undefined {
+  get metadata(): Record<string, unknown> | undefined {
     return this._metadata ? { ...this._metadata } : undefined;
   }
 
@@ -104,7 +108,7 @@ export class AnalyticsEvent {
     return [
       AnalyticsEventType.BUTTON_CLICK,
       AnalyticsEventType.FORM_SUBMIT,
-      AnalyticsEventType.SCROLL
+      AnalyticsEventType.SCROLL,
     ].includes(this._type);
   }
 
@@ -124,8 +128,10 @@ export class AnalyticsEvent {
         return 10;
       case AnalyticsEventType.PAGE_VIEW:
         return 5;
-      case AnalyticsEventType.TIME_SPENT:
-        return Math.min((this._metadata?.duration || 0) / 10, 30); // Max 30 points for time spent
+      case AnalyticsEventType.TIME_SPENT: {
+        const duration = (this._metadata as TimeSpentMetadata)?.duration || 0;
+        return Math.min(duration / 10, 30); // Max 30 points for time spent
+      }
       default:
         return 0;
     }

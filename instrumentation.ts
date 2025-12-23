@@ -7,13 +7,13 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T07:49:35
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:56:10
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 export async function register() {
   // Only initialize Sentry if DSN is provided
@@ -28,9 +28,15 @@ export async function register() {
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       spotlight: process.env.NODE_ENV === 'development',
       tracesSampleRate: 1,
-      debug: false,
+      debug: process.env.NODE_ENV === 'development',
       environment: process.env.NODE_ENV,
     });
+
+    // Dynamically import server error handlers (only for Node.js runtime)
+    // This prevents Edge runtime from trying to parse process.on() calls
+    const { initializeServerErrorHandlers } =
+      await import('./src/utils/globalErrorHandlers.server');
+    initializeServerErrorHandlers();
   }
 
   if (process.env.NEXT_RUNTIME === 'edge') {
@@ -39,8 +45,11 @@ export async function register() {
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       spotlight: process.env.NODE_ENV === 'development',
       tracesSampleRate: 1,
-      debug: false,
+      debug: process.env.NODE_ENV === 'development',
       environment: process.env.NODE_ENV,
     });
+
+    // Note: Edge runtime has different error handling mechanisms
+    // Global process handlers are not available in Edge runtime
   }
 }

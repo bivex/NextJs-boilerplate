@@ -36,13 +36,13 @@ export function Tabs({ tabs, defaultValue }: TabsProps) {
   return (
     <RadixTabs.Root defaultValue={defaultTab}>
       <RadixTabs.List>
-        {tabs.map((tab) => (
+        {tabs.map(tab => (
           <RadixTabs.Trigger key={tab.id} value={tab.id}>
             {tab.title}
           </RadixTabs.Trigger>
         ))}
       </RadixTabs.List>
-      {tabs.map((tab) => (
+      {tabs.map(tab => (
         <RadixTabs.Content key={tab.id} value={tab.id}>
           {tab.content}
         </RadixTabs.Content>

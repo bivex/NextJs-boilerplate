@@ -25,7 +25,10 @@ import { EmailServicePort } from '../../application/ports/EmailServicePort';
 import { ContactInfo } from '../../domain/value-objects/ContactInfo';
 
 export class ConsoleEmailServiceAdapter implements EmailServicePort {
-  async sendWelcomeEmail(contactInfo: ContactInfo, productName: string): Promise<void> {
+  async sendWelcomeEmail(
+    contactInfo: ContactInfo,
+    productName: string
+  ): Promise<void> {
     const emailContent = {
       to: contactInfo.email,
       subject: `Welcome to ${productName}! 🚀`,
@@ -45,9 +48,10 @@ If you have any questions, feel free to reply to this email.
 
 Best regards,
 The NextBoilerplate Team
-      `.trim()
+      `.trim(),
     };
 
+    // eslint-disable-next-line no-console
     console.log('📧 Welcome Email:', emailContent);
 
     // Simulate email sending delay
@@ -56,7 +60,7 @@ The NextBoilerplate Team
 
   async sendContactNotification(
     contactInfo: ContactInfo,
-    additionalData?: Record<string, any>
+    additionalData?: Record<string, unknown>
   ): Promise<void> {
     const emailContent = {
       to: 'support@nextboilerplate.com', // Internal notification
@@ -72,9 +76,10 @@ Message: ${contactInfo.message || 'No message provided'}
 Additional Data: ${JSON.stringify(additionalData || {}, null, 2)}
 
 Please follow up with this lead.
-      `.trim()
+      `.trim(),
     };
 
+    // eslint-disable-next-line no-console
     console.log('📧 Contact Notification:', emailContent);
 
     // Simulate email sending delay
@@ -98,9 +103,10 @@ You can unsubscribe at any time using the link in our emails.
 
 Best regards,
 The NextBoilerplate Team
-      `.trim()
+      `.trim(),
     };
 
+    // eslint-disable-next-line no-console
     console.log('📧 Newsletter Confirmation:', emailContent);
 
     // Simulate email sending delay
@@ -112,10 +118,11 @@ The NextBoilerplate Team
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidFormat = emailPattern.test(email);
 
+    // eslint-disable-next-line no-console
     console.log('🔍 Email Validation:', {
       email,
       isValidFormat,
-      checkedAt: new Date().toISOString()
+      checkedAt: new Date().toISOString(),
     });
 
     // In a real implementation, this would check against email verification services

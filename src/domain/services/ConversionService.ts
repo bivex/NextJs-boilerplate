@@ -21,7 +21,10 @@
  */
 
 import { Visitor } from '../entities/Visitor';
-import { AnalyticsEvent, AnalyticsEventType } from '../value-objects/AnalyticsEvent';
+import {
+  AnalyticsEvent,
+  AnalyticsEventType,
+} from '../value-objects/AnalyticsEvent';
 import { ContactInfo } from '../value-objects/ContactInfo';
 
 export class ConversionService {
@@ -65,7 +68,7 @@ export class ConversionService {
         email: contactInfo.email,
         hasName: contactInfo.hasName(),
         hasMessage: contactInfo.hasMessage(),
-        hasCompany: contactInfo.hasCompany()
+        hasCompany: contactInfo.hasCompany(),
       }
     );
 
@@ -78,9 +81,9 @@ export class ConversionService {
    * @returns true if the visitor can be converted
    */
   static isEligibleForConversion(visitor: Visitor): boolean {
-    return !visitor.isConverted() && (
-      visitor.status === 'anonymous' ||
-      visitor.status === 'engaged'
+    return (
+      !visitor.isConverted() &&
+      (visitor.status === 'anonymous' || visitor.status === 'engaged')
     );
   }
 
@@ -132,7 +135,7 @@ export class ConversionService {
       timeToConvert: visitor.convertedAt
         ? visitor.convertedAt.getTime() - visitor.firstVisitAt.getTime()
         : undefined,
-      conversionSource: lastConversionEvent?.elementName
+      conversionSource: lastConversionEvent?.elementName,
     };
   }
 }

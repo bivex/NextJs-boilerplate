@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:17
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:23:59
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -24,14 +24,14 @@ import { AnalyticsEvent } from '../value-objects/AnalyticsEvent';
 import { ContactInfo } from '../value-objects/ContactInfo';
 
 export enum VisitorStatus {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   ANONYMOUS = 'anonymous',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   ENGAGED = 'engaged',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   CONVERTED = 'converted',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  BOUNCED = 'bounced'
+  // eslint-disable-next-line no-unused-vars
+  BOUNCED = 'bounced',
 }
 
 export class Visitor {
@@ -137,7 +137,7 @@ export class Visitor {
 
   hasRecentActivity(minutesThreshold: number = 30): boolean {
     const thresholdMs = minutesThreshold * 60 * 1000;
-    return (Date.now() - this._lastActivityAt.getTime()) < thresholdMs;
+    return Date.now() - this._lastActivityAt.getTime() < thresholdMs;
   }
 
   getEngagementScore(): number {

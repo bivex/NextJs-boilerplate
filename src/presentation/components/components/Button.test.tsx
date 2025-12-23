@@ -60,11 +60,7 @@ describe('Button', () => {
   it('renders icons correctly', () => {
     const TestIcon = () => <span data-testid="test-icon">🔥</span>;
 
-    render(
-      <Button leftIcon={<TestIcon />}>
-        With Icon
-      </Button>
-    );
+    render(<Button leftIcon={<TestIcon />}>With Icon</Button>);
 
     expect(screen.getByTestId('test-icon')).toBeInTheDocument();
     expect(screen.getByText('With Icon')).toBeInTheDocument();

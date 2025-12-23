@@ -95,7 +95,11 @@ export class Product {
   }
 
   // Business rules validation
-  private validateProductData(name: string, description: string, version: string): void {
+  private validateProductData(
+    name: string,
+    description: string,
+    version: string
+  ): void {
     if (!name || name.trim().length === 0) {
       throw new Error('Product name cannot be empty');
     }
@@ -111,7 +115,9 @@ export class Product {
     // Version should follow semantic versioning pattern
     const versionPattern = /^\d+\.\d+\.\d+$/;
     if (!versionPattern.test(version)) {
-      throw new Error('Product version must follow semantic versioning (x.y.z)');
+      throw new Error(
+        'Product version must follow semantic versioning (x.y.z)'
+      );
     }
   }
 }

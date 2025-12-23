@@ -20,7 +20,16 @@ interface ProgressProps {
   max?: number;
   size?: '1' | '2' | '3';
   variant?: 'classic' | 'soft' | 'surface';
-  color?: 'gray' | 'blue' | 'green' | 'orange' | 'red' | 'yellow' | 'purple' | 'pink' | 'indigo';
+  color?:
+    | 'gray'
+    | 'blue'
+    | 'green'
+    | 'orange'
+    | 'red'
+    | 'yellow'
+    | 'purple'
+    | 'pink'
+    | 'indigo';
 }
 
 export function Progress({
@@ -28,7 +37,7 @@ export function Progress({
   max = 100,
   size = '2',
   variant = 'surface',
-  color
+  color,
 }: ProgressProps) {
   return (
     <RadixProgress

@@ -21,41 +21,44 @@
  */
 
 import { VisitorRepositoryPort } from '../../application/ports/VisitorRepositoryPort';
-import { Visitor, VisitorStatus } from '../../domain/entities/Visitor';
+import { Visitor } from '../../domain/entities/Visitor';
 import { ContactInfo } from '../../domain/value-objects/ContactInfo';
 
 export class InMemoryVisitorRepository implements VisitorRepositoryPort {
   private visitors = new Map<string, Visitor>();
   private sessionToVisitorId = new Map<string, string>();
 
-  async save(visitor: Visitor): Promise<void> {
-    this.visitors.set(visitor.id, visitor);
-    this.sessionToVisitorId.set(visitor.sessionId, visitor.id);
+  async save(_visitor: Visitor): Promise<void> {
+    this.visitors.set(_visitor.id, _visitor);
+    this.sessionToVisitorId.set(_visitor.sessionId, _visitor.id);
   }
 
-  async findById(id: string): Promise<Visitor | null> {
-    return this.visitors.get(id) || null;
+  async findById(_id: string): Promise<Visitor | null> {
+    return this.visitors.get(_id) || null;
   }
 
-  async findBySessionId(sessionId: string): Promise<Visitor | null> {
-    const visitorId = this.sessionToVisitorId.get(sessionId);
+  async findBySessionId(_sessionId: string): Promise<Visitor | null> {
+    const visitorId = this.sessionToVisitorId.get(_sessionId);
     if (!visitorId) return null;
 
     return this.visitors.get(visitorId) || null;
   }
 
-  async create(sessionId: string): Promise<Visitor> {
+  async create(_sessionId: string): Promise<Visitor> {
     const visitorId = `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const visitor = new Visitor(visitorId, sessionId);
+    const visitor = new Visitor(visitorId, _sessionId);
 
     this.visitors.set(visitorId, visitor);
-    this.sessionToVisitorId.set(sessionId, visitorId);
+    this.sessionToVisitorId.set(_sessionId, visitorId);
 
     return visitor;
   }
 
-  async updateContactInfo(visitorId: string, contactInfo: ContactInfo): Promise<void> {
-    const visitor = this.visitors.get(visitorId);
+  async updateContactInfo(
+    _visitorId: string,
+    _contactInfo: ContactInfo
+  ): Promise<void> {
+    const visitor = this.visitors.get(_visitorId);
     if (!visitor) {
       throw new Error('Visitor not found');
     }
@@ -64,37 +67,48 @@ export class InMemoryVisitorRepository implements VisitorRepositoryPort {
     // For now, we'll just ensure the visitor exists
   }
 
-  async getConvertedVisitors(dateRange: { start: Date; end: Date }): Promise<Visitor[]> {
-    return Array.from(this.visitors.values())
-      .filter(visitor =>
+  async getConvertedVisitors(_dateRange: {
+    start: Date;
+    end: Date;
+  }): Promise<Visitor[]> {
+    return Array.from(this.visitors.values()).filter(
+      visitor =>
         visitor.isConverted() &&
         visitor.convertedAt &&
-        visitor.convertedAt >= dateRange.start &&
-        visitor.convertedAt <= dateRange.end
-      );
+        visitor.convertedAt >= _dateRange.start &&
+        visitor.convertedAt <= _dateRange.end
+    );
   }
 
-  async getVisitorStatistics(dateRange: { start: Date; end: Date }): Promise<{
+  async getVisitorStatistics(_dateRange: { start: Date; end: Date }): Promise<{
     totalVisitors: number;
     convertedVisitors: number;
     conversionRate: number;
     averageEngagementScore: number;
   }> {
-    const visitorsInRange = Array.from(this.visitors.values())
-      .filter(visitor => visitor.firstVisitAt >= dateRange.start && visitor.firstVisitAt <= dateRange.end);
+    const visitorsInRange = Array.from(this.visitors.values()).filter(
+      visitor =>
+        visitor.firstVisitAt >= _dateRange.start &&
+        visitor.firstVisitAt <= _dateRange.end
+    );
 
     const totalVisitors = visitorsInRange.length;
-    const convertedVisitors = visitorsInRange.filter(v => v.isConverted()).length;
-    const conversionRate = totalVisitors > 0 ? convertedVisitors / totalVisitors : 0;
-    const averageEngagementScore = totalVisitors > 0
-      ? visitorsInRange.reduce((sum, v) => sum + v.getEngagementScore(), 0) / totalVisitors
-      : 0;
+    const convertedVisitors = visitorsInRange.filter(v =>
+      v.isConverted()
+    ).length;
+    const conversionRate =
+      totalVisitors > 0 ? convertedVisitors / totalVisitors : 0;
+    const averageEngagementScore =
+      totalVisitors > 0
+        ? visitorsInRange.reduce((sum, v) => sum + v.getEngagementScore(), 0) /
+          totalVisitors
+        : 0;
 
     return {
       totalVisitors,
       convertedVisitors,
       conversionRate,
-      averageEngagementScore
+      averageEngagementScore,
     };
   }
 }

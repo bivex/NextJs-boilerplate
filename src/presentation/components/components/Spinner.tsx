@@ -22,7 +22,11 @@ interface SpinnerProps {
   size?: '1' | '2' | '3';
 }
 
-export function Spinner({ loading = true, children, size = '2' }: SpinnerProps) {
+export function Spinner({
+  loading = true,
+  children,
+  size = '2',
+}: SpinnerProps) {
   if (loading) {
     return <RadixSpinner size={size} />;
   }

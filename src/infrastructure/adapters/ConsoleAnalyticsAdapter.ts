@@ -26,21 +26,23 @@ import { AnalyticsEvent } from '../../domain/value-objects/AnalyticsEvent';
 
 export class ConsoleAnalyticsAdapter implements AnalyticsPort {
   async trackEvent(event: AnalyticsEvent): Promise<void> {
+    // eslint-disable-next-line no-console
     console.log('📊 Analytics Event:', {
       type: event.type,
       timestamp: event.timestamp.toISOString(),
       pageUrl: event.pageUrl,
       elementId: event.elementId,
       elementName: event.elementName,
-      metadata: event.metadata
+      metadata: event.metadata,
     });
   }
 
   async trackPageView(pageUrl: string, visitorId?: string): Promise<void> {
+    // eslint-disable-next-line no-console
     console.log('👁️ Page View:', {
       pageUrl,
       visitorId,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 
@@ -48,14 +50,15 @@ export class ConsoleAnalyticsAdapter implements AnalyticsPort {
     visitorId: string;
     source: string;
     value?: number;
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
   }): Promise<void> {
+    // eslint-disable-next-line no-console
     console.log('🎯 Conversion:', {
       visitorId: conversionData.visitorId,
       source: conversionData.source,
       value: conversionData.value,
       metadata: conversionData.metadata,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 
@@ -68,6 +71,7 @@ export class ConsoleAnalyticsAdapter implements AnalyticsPort {
   }> {
     // In a real implementation, this would query analytics data
     // For now, return mock data
+    // eslint-disable-next-line no-console
     console.log('📈 Analytics Summary requested for range:', dateRange);
 
     return {
@@ -77,14 +81,14 @@ export class ConsoleAnalyticsAdapter implements AnalyticsPort {
       topPages: [
         { url: '/', views: 892 },
         { url: '/docs', views: 234 },
-        { url: '/features', views: 156 }
+        { url: '/features', views: 156 },
       ],
       engagementMetrics: {
         averageSessionDuration: 185, // seconds
         bounceRate: 0.34,
         pageViewsPerSession: 2.8,
-        returnVisitorRate: 0.23
-      }
+        returnVisitorRate: 0.23,
+      },
     };
   }
 }

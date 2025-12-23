@@ -13,7 +13,12 @@
  * Commercial licensing available upon request.
  */
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor as _waitFor,
+} from '@testing-library/react';
 import React from 'react';
 
 import { ErrorBoundary } from './ErrorBoundary';
@@ -47,11 +52,7 @@ const EventErrorComponent = () => {
     throw new Error('Event error');
   }
 
-  return (
-    <button onClick={() => setShouldThrow(true)}>
-      Trigger Error
-    </button>
-  );
+  return <button onClick={() => setShouldThrow(true)}>Trigger Error</button>;
 };
 
 describe('ErrorBoundary', () => {
@@ -77,9 +78,15 @@ describe('ErrorBoundary', () => {
     );
 
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-    expect(screen.getByText(/We encountered an unexpected error/)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Try Again/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Refresh Page/i })).toBeInTheDocument();
+    expect(
+      screen.getByText(/We encountered an unexpected error/)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Try Again/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Refresh Page/i })
+    ).toBeInTheDocument();
   });
 
   it('renders custom fallback when provided', () => {
@@ -120,7 +127,9 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
 
-    expect(screen.getByRole('button', { name: /Try Again/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Try Again/i })
+    ).toBeInTheDocument();
   });
 
   it('shows error details in development mode', () => {
@@ -132,7 +141,9 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
 
-    expect(screen.getByText('Error Details (Development Only)')).toBeInTheDocument();
+    expect(
+      screen.getByText('Error Details (Development Only)')
+    ).toBeInTheDocument();
     expect(screen.getByText(/Test error/)).toBeInTheDocument();
   });
 
@@ -145,7 +156,9 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
 
-    expect(screen.queryByText('Error Details (Development Only)')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Error Details (Development Only)')
+    ).not.toBeInTheDocument();
   });
 
   it('handles errors thrown in event handlers', () => {
@@ -156,7 +169,9 @@ describe('ErrorBoundary', () => {
     );
 
     // Initially renders normally
-    expect(screen.getByRole('button', { name: /Trigger Error/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Trigger Error/i })
+    ).toBeInTheDocument();
 
     // Trigger error in event handler
     fireEvent.click(screen.getByRole('button', { name: /Trigger Error/i }));
@@ -186,6 +201,8 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
 
-    expect(screen.getByRole('button', { name: /Refresh Page/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Refresh Page/i })
+    ).toBeInTheDocument();
   });
 });

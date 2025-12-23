@@ -29,7 +29,7 @@ interface TabNavProps {
 export function TabNav({ items, size = '2' }: TabNavProps) {
   return (
     <RadixTabNav.Root size={size}>
-      {items.map((item) => (
+      {items.map(item => (
         <RadixTabNav.Link key={item.value} href={item.href}>
           {item.label}
         </RadixTabNav.Link>

@@ -19,7 +19,6 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Moon, Sun, Monitor } from 'lucide-react';
 
 import { Button } from './Button';
-import { Switch } from './Switch';
 import { useTheme } from './ThemeProvider';
 
 export function ThemeSwitcher() {
@@ -47,7 +46,7 @@ export function ThemeSwitcher() {
             onClick={() => setTheme(value)}
             className={theme === value ? 'bg-accent' : ''}
           >
-            <Icon className="h-4 w-4 mr-2" />
+            <Icon className="mr-2 h-4 w-4" />
             {label}
           </DropdownMenu.Item>
         ))}
@@ -79,15 +78,24 @@ export function SimpleThemeSwitcher() {
 
   const getIcon = () => {
     switch (theme) {
-      case 'light': return <Sun className="h-5 w-5" />;
-      case 'dark': return <Moon className="h-5 w-5" />;
-      case 'system': return <Monitor className="h-5 w-5" />;
-      default: return <Sun className="h-5 w-5" />;
+      case 'light':
+        return <Sun className="h-5 w-5" />;
+      case 'dark':
+        return <Moon className="h-5 w-5" />;
+      case 'system':
+        return <Monitor className="h-5 w-5" />;
+      default:
+        return <Sun className="h-5 w-5" />;
     }
   };
 
   return (
-    <Button variant="ghost" size="2" onClick={cycleTheme} title={`Current: ${theme} - Click to cycle`}>
+    <Button
+      variant="ghost"
+      size="2"
+      onClick={cycleTheme}
+      title={`Current: ${theme} - Click to cycle`}
+    >
       {getIcon()}
     </Button>
   );

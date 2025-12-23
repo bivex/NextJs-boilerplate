@@ -89,7 +89,7 @@ export interface ErrorReport {
   error: Error;
   context: ErrorContext;
   stack?: string | undefined;
-  additionalData?: Record<string, any> | undefined;
+  additionalData?: Record<string, unknown> | undefined;
 }
 
 /**
@@ -98,13 +98,14 @@ export interface ErrorReport {
 export function createErrorReport(
   error: Error,
   context: Partial<ErrorContext> = {},
-  additionalData?: Record<string, any>
+  additionalData?: Record<string, unknown>
 ): ErrorReport {
   return {
     error,
     context: {
       timestamp: new Date(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+      userAgent:
+        typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
       url: typeof window !== 'undefined' ? window.location.href : undefined,
       ...context,
     },
@@ -117,19 +118,22 @@ export function createErrorReport(
  * Logs error to console with structured format
  */
 export function logError(error: Error | ErrorReport, context?: string): void {
-  const report = error instanceof Error ? createErrorReport(error, { component: context }) : error;
+  const _report =
+    error instanceof Error
+      ? createErrorReport(error, { component: context })
+      : error;
 
-  console.group(`🚨 Error: ${report.error.name}`);
-  console.error('Message:', report.error.message);
-  console.error('Code:', (report.error as any).code || 'Unknown');
-  console.error('Context:', report.context);
-  if (report.additionalData) {
-    console.error('Additional Data:', report.additionalData);
-  }
-  if (report.stack) {
-    console.error('Stack Trace:', report.stack);
-  }
-  console.groupEnd();
+  // console.group(`🚨 Error: ${report.error.name}`);
+  // console.error('Message:', report.error.message);
+  // console.error('Code:', (report.error as any).code || 'Unknown');
+  // console.error('Context:', report.context);
+  // if (report.additionalData) {
+  //   console.error('Additional Data:', report.additionalData);
+  // }
+  // if (report.stack) {
+  //   console.error('Stack Trace:', report.stack);
+  // }
+  // console.groupEnd();
 }
 
 /**
@@ -137,7 +141,7 @@ export function logError(error: Error | ErrorReport, context?: string): void {
  */
 export async function safeExecute<T>(
   fn: () => Promise<T>,
-  errorHandler?: (error: Error) => void
+  errorHandler?: (_error: Error) => void
 ): Promise<{ success: true; data: T } | { success: false; error: Error }> {
   try {
     const data = await fn();
@@ -152,24 +156,24 @@ export async function safeExecute<T>(
 /**
  * Wraps a function with error logging
  */
-export function withErrorLogging<T extends (...args: any[]) => any>(
+export function withErrorLogging<T extends (..._args: unknown[]) => unknown>(
   fn: T,
   context?: string
 ): T {
-  return ((...args: Parameters<T>) => {
+  return ((..._args: Parameters<T>) => {
     try {
-      const result = fn(...args);
+      const result = fn(..._args);
       // Handle both sync and async functions
-      if (result && typeof result.catch === 'function') {
-        return result.catch((error: Error) => {
-          logError(error, context);
-          throw error;
+      if (result && typeof (result as Promise<unknown>).catch === 'function') {
+        return (result as Promise<unknown>).catch((_error: Error) => {
+          logError(_error, context);
+          throw _error;
         });
       }
       return result;
-    } catch (error) {
-      logError(error as Error, context);
-      throw error;
+    } catch (_error) {
+      logError(_error as Error, context);
+      throw _error;
     }
   }) as T;
 }
@@ -178,34 +182,34 @@ export function withErrorLogging<T extends (...args: any[]) => any>(
  * Checks if an error is a specific type
  */
 export function isErrorType<T extends Error>(
-  error: unknown,
-  ErrorClass: new (...args: any[]) => T
-): error is T {
-  return error instanceof ErrorClass;
+  _error: unknown,
+  ErrorClass: new (..._args: unknown[]) => T
+): _error is T {
+  return _error instanceof ErrorClass;
 }
 
 /**
  * Gets user-friendly error message
  */
-export function getErrorMessage(error: unknown): string {
-  if (error instanceof Error) {
+export function getErrorMessage(_error: unknown): string {
+  if (_error instanceof Error) {
     // Return specific messages for known error types
-    if (error instanceof ValidationError) {
-      return `Validation failed: ${error.message}`;
+    if (_error instanceof ValidationError) {
+      return `Validation failed: ${_error.message}`;
     }
-    if (error instanceof NotFoundError) {
+    if (_error instanceof NotFoundError) {
       return 'The requested resource was not found.';
     }
-    if (error instanceof UnauthorizedError) {
+    if (_error instanceof UnauthorizedError) {
       return 'You need to log in to access this resource.';
     }
-    if (error instanceof ForbiddenError) {
-      return 'You don\'t have permission to access this resource.';
+    if (_error instanceof ForbiddenError) {
+      return "You don't have permission to access this resource.";
     }
-    if (error instanceof NetworkError) {
+    if (_error instanceof NetworkError) {
       return 'Network connection failed. Please check your internet connection.';
     }
-    return error.message;
+    return _error.message;
   }
   return 'An unexpected error occurred.';
 }

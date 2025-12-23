@@ -31,9 +31,13 @@ interface AccordionProps {
   type?: 'single' | 'multiple';
 }
 
-export function Accordion({ items, defaultValue, type = 'single' }: AccordionProps) {
+export function Accordion({
+  items,
+  defaultValue,
+  type = 'single',
+}: AccordionProps) {
   if (type === 'single') {
-    const props: any = {
+    const props: React.ComponentProps<typeof AccordionPrimitive.Root> = {
       type: 'single' as const,
       collapsible: true,
     };
@@ -43,10 +47,10 @@ export function Accordion({ items, defaultValue, type = 'single' }: AccordionPro
 
     return (
       <AccordionPrimitive.Root {...props}>
-        {items.map((item) => (
+        {items.map(item => (
           <AccordionPrimitive.Item key={item.id} value={item.id}>
             <AccordionPrimitive.Header>
-              <AccordionPrimitive.Trigger className="flex items-center justify-between w-full p-4 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 {item.title}
                 <ChevronDown className="ml-2 transition-transform duration-200 data-[state=open]:rotate-180" />
               </AccordionPrimitive.Trigger>
@@ -60,7 +64,7 @@ export function Accordion({ items, defaultValue, type = 'single' }: AccordionPro
     );
   }
 
-  const props: any = {
+  const props: React.ComponentProps<typeof AccordionPrimitive.Root> = {
     type: 'multiple' as const,
   };
   if (defaultValue) {
@@ -69,10 +73,10 @@ export function Accordion({ items, defaultValue, type = 'single' }: AccordionPro
 
   return (
     <AccordionPrimitive.Root {...props}>
-      {items.map((item) => (
+      {items.map(item => (
         <AccordionPrimitive.Item key={item.id} value={item.id}>
           <AccordionPrimitive.Header>
-            <AccordionPrimitive.Trigger className="flex items-center justify-between w-full p-4 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
               {item.title}
               <ChevronDown className="ml-2 transition-transform duration-200 data-[state=open]:rotate-180" />
             </AccordionPrimitive.Trigger>

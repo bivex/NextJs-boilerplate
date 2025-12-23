@@ -24,26 +24,26 @@ interface CheckboxCardItem {
 interface CheckboxCardsProps {
   items: CheckboxCardItem[];
   value?: string[];
-  onValueChange?: (value: string[]) => void;
+  onValueChange?: (_value: string[]) => void;
   columns?: '1' | '2' | '3' | '4';
   size?: '1' | '2' | '3';
 }
 
 export function CheckboxCards({
   items,
-  value = [],
+  value: _value = [],
   onValueChange,
   columns = '1',
-  size = '2'
+  size = '2',
 }: CheckboxCardsProps) {
   return (
     <RadixCheckboxCards.Root
-      value={value}
+      value={_value}
       onValueChange={onValueChange || (() => {})}
       columns={columns}
       size={size}
     >
-      {items.map((item) => (
+      {items.map(item => (
         <RadixCheckboxCards.Item key={item.value} value={item.value}>
           {item.title}
           {item.description && <div>{item.description}</div>}

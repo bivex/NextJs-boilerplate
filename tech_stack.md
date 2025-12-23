@@ -5,6 +5,7 @@ This document outlines the comprehensive technology stack used in this Next.js b
 ## 🏗️ Architecture
 
 ### Clean Architecture Pattern
+
 The project follows **Clean Architecture** principles with clear separation of concerns:
 
 - **Domain Layer** (`src/domain/`): Business logic, entities, value objects, and domain services
@@ -15,11 +16,13 @@ The project follows **Clean Architecture** principles with clear separation of c
 ## 🎯 Core Technologies
 
 ### Frontend Framework
+
 - **Next.js 16.1.1** - React framework with App Router, server components, and optimized performance
 - **React 19.2.3** - Latest React with concurrent features and improved performance
 - **TypeScript 5.9.3** - Type-safe JavaScript with advanced type features
 
 ### UI & Components
+
 - **Radix UI Themes 3.2.1** - Modern component library with:
   - 30+ accessible color scales with custom palette generator
   - Powerful layout engine with responsive object syntax
@@ -28,6 +31,7 @@ The project follows **Clean Architecture** principles with clear separation of c
 - **Tailwind CSS 4.1.18** - Utility-first CSS framework with latest features
 
 ### Styling & UI
+
 - **Radix UI Themes 3.0** - Modern component library with:
   - 30+ accessible color scales
   - Custom color palette generator
@@ -36,6 +40,7 @@ The project follows **Clean Architecture** principles with clear separation of c
 - **Tailwind CSS 4.1.18** - Utility-first CSS framework
 
 ### Component Library Features
+
 - **New Radix Themes 3.0 Components**:
   - Spinner & Skeleton (loading states)
   - SegmentedControl (toggle buttons)
@@ -48,11 +53,13 @@ The project follows **Clean Architecture** principles with clear separation of c
 ## 🧪 Testing & Quality
 
 ### Testing Framework
+
 - **Jest 30.2.0** - JavaScript testing framework
 - **Testing Library** - React component testing utilities
 - **Jest DOM** - Custom Jest matchers for DOM testing
 
 ### Code Quality
+
 - **ESLint 9.39.2** - JavaScript/TypeScript linting
 - **Prettier 3.7.4** - Code formatting
 - **TypeScript Compiler** - Type checking
@@ -62,22 +69,26 @@ The project follows **Clean Architecture** principles with clear separation of c
 ## 🛠️ Development Tools
 
 ### Build & Development
+
 - **Turbopack** - Fast bundler for development
 - **Next.js Dev Server** - Hot reload development server
 - **Bundle Analyzer** - Webpack bundle analysis
 
 ### Package Management
+
 - **npm** - Primary package manager
 - **Bun 1.0.0** - Alternative fast package manager
 - **Node.js 18.17.0+** - JavaScript runtime
 
 ### Version Management
+
 - **Custom Versioning Script** - Automated semantic versioning
 - **Release Scripts** - Automated build, test, and publish
 
 ## 📦 Key Dependencies
 
 ### UI & Components
+
 ```json
 {
   "@radix-ui/themes": "^3.0.0",
@@ -90,6 +101,7 @@ The project follows **Clean Architecture** principles with clear separation of c
 ```
 
 ### Development & Build
+
 ```json
 {
   "@types/node": "^25.0.3",
@@ -105,15 +117,17 @@ The project follows **Clean Architecture** principles with clear separation of c
 ## 🎨 Styling Approach
 
 ### Design System
+
 - **Radix Colors** - Accessible color system
 - **CSS Custom Properties** - Theme variables
 - **Responsive Design** - Mobile-first approach
 - **Dark Mode Support** - Built-in theme switching
 
 ### Layout Engine
+
 ```tsx
 // Responsive object syntax
-<Flex width={{ initial: "100%", sm: "300px", md: "500px" }}>
+<Flex width={{ initial: '100%', sm: '300px', md: '500px' }}>
   <Box p="4">Content</Box>
 </Flex>
 ```
@@ -121,12 +135,14 @@ The project follows **Clean Architecture** principles with clear separation of c
 ## 🚀 Performance & Optimization
 
 ### Next.js Optimizations
+
 - **App Router** - Modern routing with layouts
 - **Server Components** - Optimized server-side rendering
 - **Image Optimization** - Automatic image optimization
 - **Code Splitting** - Automatic route-based splitting
 
 ### Build Optimizations
+
 - **Tree Shaking** - Remove unused code
 - **Bundle Analysis** - Identify bundle bloat
 - **CSS Optimization** - Minimize and optimize styles
@@ -135,6 +151,7 @@ The project follows **Clean Architecture** principles with clear separation of c
 ## 🔧 Configuration Files
 
 ### Core Configs
+
 - `next.config.mjs` - Next.js configuration
 - `tailwind.config.ts` - Tailwind CSS configuration
 - `tsconfig.json` - TypeScript configuration
@@ -143,6 +160,7 @@ The project follows **Clean Architecture** principles with clear separation of c
 - `prettier.config.js` - Prettier configuration
 
 ### Development Scripts
+
 ```json
 {
   "dev": "next dev --turbo",
@@ -187,18 +205,21 @@ src/
 ## 🌟 Key Features
 
 ### Modern React Patterns
+
 - **Server Components** - Optimized performance
 - **Suspense** - Loading states
 - **Error Boundaries** - Error handling
 - **Custom Hooks** - Reusable logic
 
 ### Developer Experience
+
 - **Hot Reload** - Instant feedback
 - **Type Safety** - Full TypeScript coverage
 - **Code Generation** - Automated boilerplate
 - **IntelliSense** - Enhanced IDE support
 
 ### Production Ready
+
 - **SEO Optimized** - Meta tags and structured data
 - **Performance Monitoring** - Bundle analysis
 - **Error Tracking** - Comprehensive error handling
@@ -207,12 +228,14 @@ src/
 ## 🔄 Migration Notes
 
 ### Recent Updates
+
 - **Radix Themes 3.0 Migration** - Complete upgrade from Radix UI primitives
 - **React 19** - Latest React features
 - **TypeScript 5.9** - Advanced type features
 - **Tailwind CSS 4** - Latest utility framework
 
 ### Breaking Changes
+
 - Component APIs updated for Radix Themes 3.0
 - Layout engine changed to use Radix Themes components
 - Styling approach shifted from Tailwind utilities to Radix Themes
@@ -227,4 +250,4 @@ src/
 
 ---
 
-*This tech stack provides a solid foundation for building scalable, maintainable, and performant React applications with modern tooling and best practices.*
+_This tech stack provides a solid foundation for building scalable, maintainable, and performant React applications with modern tooling and best practices._

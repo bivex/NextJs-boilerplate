@@ -24,7 +24,7 @@
 import { DomainEventPublisherPort } from '../../application/ports/DomainEventPublisherPort';
 import { DomainEvent } from '../../domain/events/DomainEvents';
 
-type EventHandler = (event: DomainEvent) => Promise<void>;
+type EventHandler = (_event: DomainEvent) => Promise<void>;
 
 export class InMemoryDomainEventPublisher implements DomainEventPublisherPort {
   private handlers = new Map<string, EventHandler[]>();
@@ -57,19 +57,22 @@ export class InMemoryDomainEventPublisher implements DomainEventPublisherPort {
   }
 
   async publish(event: DomainEvent): Promise<void> {
-    console.log('📢 Publishing Domain Event:', {
-      eventId: event.eventId,
-      eventType: event.eventType,
-      aggregateId: event.aggregateId,
-      occurredAt: event.occurredAt.toISOString()
-    });
+    // console.log('📢 Publishing Domain Event:', {
+    //   eventId: event.eventId,
+    //   eventType: event.eventType,
+    //   aggregateId: event.aggregateId,
+    //   occurredAt: event.occurredAt.toISOString(),
+    // });
 
     const handlers = this.handlers.get(event.eventType);
     if (handlers) {
       // Publish to all handlers asynchronously
       const promises = handlers.map(handler =>
-        handler(event).catch(error => {
-          console.error(`Error in event handler for ${event.eventType}:`, error);
+        handler(event).catch(_error => {
+          // console.error(
+          //   `Error in event handler for ${event.eventType}:`,
+          //   _error
+          // );
         })
       );
       await Promise.all(promises);

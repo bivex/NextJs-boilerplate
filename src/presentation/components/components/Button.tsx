@@ -28,24 +28,20 @@ export interface ButtonProps extends React.ComponentProps<typeof RadixButton> {
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
-    loading = false,
-    leftIcon,
-    rightIcon,
-    children,
-    disabled,
-    ...props
-  }, ref) => {
+  (
+    { loading = false, leftIcon, rightIcon, children, disabled, ...props },
+    ref
+  ) => {
     const isDisabled = disabled || loading;
 
     return (
-      <RadixButton
-        ref={ref}
-        disabled={isDisabled}
-        {...props}
-      >
+      <RadixButton ref={ref} disabled={isDisabled} {...props}>
         {loading && (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" data-testid="loading-spinner" />
+          <Loader2
+            className="mr-2 h-4 w-4 animate-spin"
+            aria-hidden="true"
+            data-testid="loading-spinner"
+          />
         )}
         {!loading && leftIcon && (
           <span className="mr-2" aria-hidden="true">

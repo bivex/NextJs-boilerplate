@@ -20,17 +20,15 @@
  * This is where all the ports are wired to their adapter implementations.
  */
 
-
 // Ports and Use Cases
 import { AnalyticsPort } from '../../application/ports/AnalyticsPort';
-import { ConvertVisitorUseCase } from '../../application/use-cases/ConvertVisitorUseCase';
-import { DisplayLandingPageUseCase } from '../../application/use-cases/DisplayLandingPageUseCase';
 import { DomainEventPublisherPort } from '../../application/ports/DomainEventPublisherPort';
 import { EmailServicePort } from '../../application/ports/EmailServicePort';
 import { ProductRepositoryPort } from '../../application/ports/ProductRepositoryPort';
-import { TrackEngagementUseCase } from '../../application/use-cases/TrackEngagementUseCase';
 import { VisitorRepositoryPort } from '../../application/ports/VisitorRepositoryPort';
-
+import { ConvertVisitorUseCase } from '../../application/use-cases/ConvertVisitorUseCase';
+import { DisplayLandingPageUseCase } from '../../application/use-cases/DisplayLandingPageUseCase';
+import { TrackEngagementUseCase } from '../../application/use-cases/TrackEngagementUseCase';
 // Adapters
 import { ConsoleAnalyticsAdapter } from '../adapters/ConsoleAnalyticsAdapter';
 import { ConsoleEmailServiceAdapter } from '../adapters/ConsoleEmailServiceAdapter';
@@ -116,14 +114,16 @@ export class DependencyInjection {
     const publisher = this.eventPublisher as InMemoryDomainEventPublisher;
 
     // Handle visitor converted events
-    publisher.subscribe('visitor.converted', async (event) => {
-      console.log('🎉 Visitor converted! Sending notifications...');
+
+    publisher.subscribe('visitor.converted', async _event => {
+      // console.log('🎉 Visitor converted! Sending notifications...');
       // In production, this might trigger CRM updates, slack notifications, etc.
     });
 
     // Handle engagement milestones
-    publisher.subscribe('visitor.engagement_milestone', async (event) => {
-      console.log('🏆 Engagement milestone reached!');
+
+    publisher.subscribe('visitor.engagement_milestone', async _event => {
+      // console.log('🏆 Engagement milestone reached!');
       // Could trigger personalized follow-ups, special offers, etc.
     });
   }

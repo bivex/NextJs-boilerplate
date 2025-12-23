@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:12:45
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:40:03
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -90,6 +90,14 @@ const eslintConfig = [
   {
     rules: {
       // General rules
+      'no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'prefer-const': 'error',
@@ -103,7 +111,7 @@ const eslintConfig = [
   // Import plugin rules
   {
     plugins: {
-      'import': importPlugin,
+      import: importPlugin,
     },
     rules: {
       'import/order': [
@@ -146,7 +154,12 @@ const eslintConfig = [
 
   // Test files
   {
-    files: ['**/__tests__/**/*', '**/*.{test,spec}.{ts,tsx,js,jsx}', 'jest.setup.js', 'jest.polyfills.js'],
+    files: [
+      '**/__tests__/**/*',
+      '**/*.{test,spec}.{ts,tsx,js,jsx}',
+      'jest.setup.js',
+      'jest.polyfills.js',
+    ],
     languageOptions: {
       globals: {
         jest: 'readonly',

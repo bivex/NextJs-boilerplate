@@ -37,17 +37,21 @@ export class VisitorConvertedEvent implements DomainEvent {
   readonly eventType = 'visitor.converted';
   readonly occurredAt: Date;
   readonly aggregateId: string;
+  readonly contactInfo: ContactInfo;
+  readonly conversionSource: string;
 
   constructor(
     public readonly visitor: Visitor,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public readonly contactInfo: ContactInfo,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public readonly conversionSource: string
+
+    _contactInfo: ContactInfo,
+
+    _conversionSource: string
   ) {
     this.eventId = `visitor-converted-${visitor.id}-${Date.now()}`;
     this.occurredAt = new Date();
     this.aggregateId = visitor.id;
+    this.contactInfo = _contactInfo;
+    this.conversionSource = _conversionSource;
   }
 }
 
@@ -57,16 +61,18 @@ export class VisitorEngagementMilestoneEvent implements DomainEvent {
   readonly eventType = 'visitor.engagement_milestone';
   readonly occurredAt: Date;
   readonly aggregateId: string;
+  readonly engagementScore: number;
 
   constructor(
     public readonly visitor: Visitor,
     public readonly milestone: string, // e.g., 'first_click', 'form_view', 'high_engagement'
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public readonly engagementScore: number
+
+    _engagementScore: number
   ) {
     this.eventId = `engagement-milestone-${visitor.id}-${milestone}-${Date.now()}`;
     this.occurredAt = new Date();
     this.aggregateId = visitor.id;
+    this.engagementScore = _engagementScore;
   }
 }
 
@@ -76,16 +82,18 @@ export class ProductFeatureViewedEvent implements DomainEvent {
   readonly eventType = 'product.feature_viewed';
   readonly occurredAt: Date;
   readonly aggregateId: string;
+  readonly featureName: string;
 
   constructor(
     public readonly visitorId: string,
     public readonly productId: string,
     public readonly featureId: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public readonly featureName: string
+
+    _featureName: string
   ) {
     this.eventId = `feature-viewed-${visitorId}-${featureId}-${Date.now()}`;
     this.occurredAt = new Date();
     this.aggregateId = productId;
+    this.featureName = _featureName;
   }
 }

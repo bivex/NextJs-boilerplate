@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T07:35:00
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:39:52
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,23 +21,23 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from './Button';
 
 // Import Sentry for error reporting to Spotlight
-let Sentry: any = null;
+let Sentry: typeof import('@sentry/nextjs') | null = null;
 try {
   Sentry = require('@sentry/nextjs');
-} catch (error) {
+} catch {
   // Sentry not available in this environment, use console fallback
-  console.warn('Sentry not available for error reporting');
+  // console.warn('Sentry not available for error reporting');
 }
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  onError?: (_error: Error, _errorInfo: ErrorInfo) => void;
 }
 
 interface State {
   hasError: boolean;
-  error?: Error;
+  _error?: Error;
 }
 
 class ErrorBoundary extends Component<Props, State> {
@@ -46,19 +46,19 @@ class ErrorBoundary extends Component<Props, State> {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+  static getDerivedStateFromError(_error: Error): State {
+    return { hasError: true, _error };
   }
 
-  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+  override componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
+    // console.error('ErrorBoundary caught an error:', _error, _errorInfo);
 
     // Report error to Sentry/Spotlight for debugging
     if (Sentry) {
-      Sentry.captureException(error, {
+      Sentry.captureException(_error, {
         contexts: {
           react: {
-            componentStack: errorInfo.componentStack,
+            componentStack: _errorInfo.componentStack,
           },
         },
         tags: {
@@ -68,7 +68,7 @@ class ErrorBoundary extends Component<Props, State> {
       });
     }
 
-    this.props.onError?.(error, errorInfo);
+    this.props.onError?.(_error, _errorInfo);
   }
 
   handleRetry = () => {
@@ -82,34 +82,35 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center">
+        <div className="flex min-h-[400px] flex-col items-center justify-center p-8 text-center">
           <div className="mb-6">
-            <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <AlertTriangle className="mx-auto mb-4 h-16 w-16 text-red-500" />
+            <h2 className="mb-2 text-2xl font-bold text-gray-900">
               Something went wrong
             </h2>
-            <p className="text-gray-600 mb-4 max-w-md">
-              We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
+            <p className="mb-4 max-w-md text-gray-600">
+              We encountered an unexpected error. Please try refreshing the page
+              or contact support if the problem persists.
             </p>
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {process.env.NODE_ENV === 'development' && this.state._error && (
               <details className="mt-4 text-left">
-                <summary className="cursor-pointer text-sm font-medium text-gray-700 mb-2">
+                <summary className="mb-2 cursor-pointer text-sm font-medium text-gray-700">
                   Error Details (Development Only)
                 </summary>
-                <pre className="bg-gray-100 p-4 rounded text-xs overflow-auto max-w-full">
-                  {this.state.error.stack}
+                <pre className="max-w-full overflow-auto rounded bg-gray-100 p-4 text-xs">
+                  {this.state._error.stack}
                 </pre>
               </details>
             )}
           </div>
           <div className="flex gap-4">
-            <Button onClick={this.handleRetry} leftIcon={<RefreshCw className="h-4 w-4" />}>
+            <Button
+              onClick={this.handleRetry}
+              leftIcon={<RefreshCw className="h-4 w-4" />}
+            >
               Try Again
             </Button>
-            <Button
-              variant="outline"
-              onClick={() => window.location.reload()}
-            >
+            <Button variant="outline" onClick={() => window.location.reload()}>
               Refresh Page
             </Button>
           </div>

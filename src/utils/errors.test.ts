@@ -181,10 +181,13 @@ describe('Error Utilities', () => {
       const error = new Error('Test error');
       logError(error, 'TestComponent');
 
-      expect(console.error).toHaveBeenCalledWith('Context:', expect.objectContaining({
-        component: 'TestComponent',
-        timestamp: expect.any(Date),
-      }));
+      expect(console.error).toHaveBeenCalledWith(
+        'Context:',
+        expect.objectContaining({
+          component: 'TestComponent',
+          timestamp: expect.any(Date),
+        })
+      );
     });
   });
 
@@ -214,12 +217,9 @@ describe('Error Utilities', () => {
       const errorHandler = jest.fn();
       const testError = new Error('Test error');
 
-      await safeExecute(
-        async () => {
-          throw testError;
-        },
-        errorHandler
-      );
+      await safeExecute(async () => {
+        throw testError;
+      }, errorHandler);
 
       expect(errorHandler).toHaveBeenCalledWith(testError);
     });
@@ -287,11 +287,21 @@ describe('Error Utilities', () => {
 
   describe('getErrorMessage', () => {
     it('returns custom messages for known error types', () => {
-      expect(getErrorMessage(new ValidationError('Test'))).toBe('Validation failed: Test');
-      expect(getErrorMessage(new NotFoundError())).toBe('The requested resource was not found.');
-      expect(getErrorMessage(new UnauthorizedError())).toBe('You need to log in to access this resource.');
-      expect(getErrorMessage(new ForbiddenError())).toBe('You don\'t have permission to access this resource.');
-      expect(getErrorMessage(new NetworkError())).toBe('Network connection failed. Please check your internet connection.');
+      expect(getErrorMessage(new ValidationError('Test'))).toBe(
+        'Validation failed: Test'
+      );
+      expect(getErrorMessage(new NotFoundError())).toBe(
+        'The requested resource was not found.'
+      );
+      expect(getErrorMessage(new UnauthorizedError())).toBe(
+        'You need to log in to access this resource.'
+      );
+      expect(getErrorMessage(new ForbiddenError())).toBe(
+        "You don't have permission to access this resource."
+      );
+      expect(getErrorMessage(new NetworkError())).toBe(
+        'Network connection failed. Please check your internet connection.'
+      );
     });
 
     it('returns error message for generic errors', () => {
@@ -300,7 +310,9 @@ describe('Error Utilities', () => {
     });
 
     it('returns default message for unknown errors', () => {
-      expect(getErrorMessage('string error')).toBe('An unexpected error occurred.');
+      expect(getErrorMessage('string error')).toBe(
+        'An unexpected error occurred.'
+      );
       expect(getErrorMessage(null)).toBe('An unexpected error occurred.');
     });
   });
@@ -325,7 +337,8 @@ describe('Error Utilities', () => {
     });
 
     it('retries on failure and succeeds', async () => {
-      const fn = jest.fn()
+      const fn = jest
+        .fn()
         .mockRejectedValueOnce(new Error('Fail 1'))
         .mockRejectedValueOnce(new Error('Fail 2'))
         .mockResolvedValue('success');

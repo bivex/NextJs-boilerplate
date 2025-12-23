@@ -14,10 +14,4 @@
  */
 
 // Re-export Radix Themes layout components
-export {
-  Box,
-  Flex,
-  Grid,
-  Section,
-  Container
-} from '@radix-ui/themes';
+export { Box, Flex, Grid, Section, Container } from '@radix-ui/themes';

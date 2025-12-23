@@ -33,12 +33,15 @@ export function DataList({
   items,
   size = '2',
   orientation = 'vertical',
-  trim = 'normal'
+  trim = 'normal',
 }: DataListProps) {
   return (
     <RadixDataList.Root size={size} orientation={orientation} trim={trim}>
       {items.map((item, index) => (
-        <RadixDataList.Item key={index} {...(item.align && { align: item.align })}>
+        <RadixDataList.Item
+          key={index}
+          {...(item.align && { align: item.align })}
+        >
           <RadixDataList.Label>{item.label}</RadixDataList.Label>
           <RadixDataList.Value>{item.value}</RadixDataList.Value>
         </RadixDataList.Item>

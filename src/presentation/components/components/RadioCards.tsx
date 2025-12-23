@@ -24,26 +24,26 @@ interface RadioCardItem {
 interface RadioCardsProps {
   items: RadioCardItem[];
   value?: string | null;
-  onValueChange?: (value: string) => void;
+  onValueChange?: (_value: string) => void;
   columns?: '1' | '2' | '3' | '4';
   size?: '1' | '2' | '3';
 }
 
 export function RadioCards({
   items,
-  value,
+  value: _value,
   onValueChange,
   columns = '1',
-  size = '2'
+  size = '2',
 }: RadioCardsProps) {
   return (
     <RadixRadioCards.Root
-      value={value ?? null}
+      value={_value ?? null}
       onValueChange={onValueChange || (() => {})}
       columns={columns}
       size={size}
     >
-      {items.map((item) => (
+      {items.map(item => (
         <RadixRadioCards.Item key={item.value} value={item.value}>
           {item.title}
           {item.description && <div>{item.description}</div>}

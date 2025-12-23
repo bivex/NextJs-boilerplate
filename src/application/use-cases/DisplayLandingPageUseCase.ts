@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:51:03
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:23:57
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -20,18 +20,26 @@
  * This is the main use case for the landing page functionality.
  */
 
-import { ProductDto, ProductSummaryDto } from '../dtos/ProductDto';
+import { ProductSummaryDto } from '../dtos/ProductDto';
 import { VisitorDto } from '../dtos/VisitorDto';
 import { AnalyticsPort } from '../ports/AnalyticsPort';
 import { ProductRepositoryPort } from '../ports/ProductRepositoryPort';
 import { VisitorRepositoryPort } from '../ports/VisitorRepositoryPort';
 
 export class DisplayLandingPageUseCase {
+  private productRepository: ProductRepositoryPort;
+  private visitorRepository: VisitorRepositoryPort;
+  private analytics: AnalyticsPort;
+
   constructor(
-    private readonly _productRepository: ProductRepositoryPort,
-    private readonly _visitorRepository: VisitorRepositoryPort,
-    private readonly _analytics: AnalyticsPort
-  ) {}
+    productRepository: ProductRepositoryPort,
+    visitorRepository: VisitorRepositoryPort,
+    analytics: AnalyticsPort
+  ) {
+    this.productRepository = productRepository;
+    this.visitorRepository = visitorRepository;
+    this.analytics = analytics;
+  }
 
   /**
    * Executes the use case to display the landing page
@@ -39,31 +47,34 @@ export class DisplayLandingPageUseCase {
    * @param pageUrl The current page URL
    * @returns Landing page data for display
    */
-  async execute(sessionId: string, pageUrl: string): Promise<{
+  async execute(
+    sessionId: string,
+    pageUrl: string
+  ): Promise<{
     product: ProductSummaryDto;
     visitor: VisitorDto;
   }> {
     // Get or create visitor
-    let visitor = await this._visitorRepository.findBySessionId(sessionId);
+    let visitor = await this.visitorRepository.findBySessionId(sessionId);
     if (!visitor) {
-      visitor = await this._visitorRepository.create(sessionId);
+      visitor = await this.visitorRepository.create(sessionId);
     }
 
     // Track page view
-    await this._analytics.trackPageView(pageUrl, visitor.id);
+    await this.analytics.trackPageView(pageUrl, visitor.id);
 
     // Get product information
-    const product = await this._productRepository.getProduct();
+    const product = await this.productRepository.getProduct();
 
     // Convert to DTOs
-    const featuredFeatures = await this._productRepository.getFeaturedFeatures();
+    const featuredFeatures = await this.productRepository.getFeaturedFeatures();
     const featuredFeaturesDto = featuredFeatures.map(feature => ({
       id: feature.id,
       name: feature.name,
       description: feature.description,
       category: feature.category,
       icon: feature.icon,
-      priority: feature.priority
+      priority: feature.priority,
     }));
 
     const productDto: ProductSummaryDto = {
@@ -72,7 +83,7 @@ export class DisplayLandingPageUseCase {
       description: product.description,
       version: product.version,
       featureCount: product.features.length,
-      featuredFeatures: featuredFeaturesDto
+      featuredFeatures: featuredFeaturesDto,
     };
 
     const visitorDto: VisitorDto = {
@@ -83,12 +94,12 @@ export class DisplayLandingPageUseCase {
       lastActivityAt: visitor.lastActivityAt,
       convertedAt: visitor.convertedAt,
       engagementScore: visitor.getEngagementScore(),
-      engagementEventsCount: visitor.engagementEvents.length
+      engagementEventsCount: visitor.engagementEvents.length,
     };
 
     return {
       product: productDto,
-      visitor: visitorDto
+      visitor: visitorDto,
     };
   }
 }

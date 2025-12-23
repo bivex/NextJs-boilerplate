@@ -168,7 +168,7 @@ export class InMemoryProductRepository implements ProductRepositoryPort {
         FeatureCategory.DEVELOPER_EXPERIENCE,
         '✨',
         7
-      )
+      ),
     ];
 
     // Add all features to the product

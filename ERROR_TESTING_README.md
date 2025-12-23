@@ -13,18 +13,22 @@ This document explains how to use the error testing page to validate Spotlight e
 The error testing page provides various error scenarios to test Spotlight's error capture capabilities:
 
 ### 1. **Render Errors**
+
 - Components that throw errors during the render phase
 - Tests error boundaries and fallback UI
 
 ### 2. **Event Handler Errors**
+
 - Errors thrown in button click handlers
 - Tests error capture in user interaction contexts
 
 ### 3. **Async Operation Errors**
+
 - Errors in async functions and promises
 - Tests error handling in asynchronous code
 
 ### 4. **Custom Error Types**
+
 - Application-specific error classes:
   - `ValidationError` - Form validation failures
   - `NotFoundError` - Resource not found
@@ -34,34 +38,40 @@ The error testing page provides various error scenarios to test Spotlight's erro
   - `AppError` - Generic application errors
 
 ### 5. **JavaScript Runtime Errors**
+
 - Null reference errors
 - Undefined property access
 - JSON parsing errors
 - Dynamic function execution errors
 
 ### 6. **Network Errors**
+
 - HTTP error simulation using httpstat.us
 - Tests network request error handling
 
 ### 7. **Error Boundary Testing**
+
 - Manual triggering of error boundaries
 - Testing retry functionality and error recovery
 
 ## Error Monitoring Features Tested
 
 ### **Spotlight Integration**
+
 - Error capture and reporting
 - Stack trace collection
 - Context information gathering
 - User session tracking
 
 ### **Error Context**
+
 - Component names and actions
 - User agent and URL information
 - Timestamp and session data
 - Custom error metadata
 
 ### **Error Boundaries**
+
 - Graceful error handling
 - User-friendly error messages
 - Error recovery mechanisms
@@ -89,7 +99,7 @@ logError(error, 'ComponentName.actionName');
 const report = createErrorReport(error, {
   component: 'TestPage',
   action: 'manualTrigger',
-  userId: 'test-user'
+  userId: 'test-user',
 });
 ```
 
@@ -104,7 +114,7 @@ import {
   UnauthorizedError,
   ForbiddenError,
   NetworkError,
-  AppError
+  AppError,
 } from '@/utils/errors';
 
 // Create specific error types
@@ -125,7 +135,7 @@ const result = await safeExecute(
     // Risky operation
     return await riskyApiCall();
   },
-  (error) => {
+  error => {
     // Error handler
     console.error('Operation failed:', error);
   }
@@ -155,16 +165,19 @@ if (result.success) {
 ## Troubleshooting
 
 ### Errors Not Appearing in Spotlight
+
 - Check Spotlight configuration and API keys
 - Verify network connectivity to Spotlight service
 - Check browser console for any configuration errors
 
 ### Test Page Not Accessible
+
 - Ensure you're running in development mode (`npm run dev`)
 - Check that the server is running on the correct port
 - Verify the route `/test-error` is accessible
 
 ### TypeScript Errors
+
 - Some override modifier warnings in ErrorBoundary are expected
 - These don't affect functionality and can be ignored
 

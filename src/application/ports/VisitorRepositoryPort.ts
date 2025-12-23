@@ -21,7 +21,6 @@
  * without depending on specific storage implementations.
  */
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Visitor } from '../../domain/entities/Visitor';
 import { ContactInfo } from '../../domain/value-objects/ContactInfo';
 
@@ -58,14 +57,20 @@ export interface VisitorRepositoryPort {
    * @param _visitorId The visitor ID
    * @param _contactInfo The contact information
    */
-  updateContactInfo(_visitorId: string, _contactInfo: ContactInfo): Promise<void>;
+  updateContactInfo(
+    _visitorId: string,
+    _contactInfo: ContactInfo
+  ): Promise<void>;
 
   /**
    * Gets all converted visitors within a date range
    * @param _dateRange Date range for the query
    * @returns Array of converted visitors
    */
-  getConvertedVisitors(_dateRange: { start: Date; end: Date }): Promise<Visitor[]>;
+  getConvertedVisitors(_dateRange: {
+    start: Date;
+    end: Date;
+  }): Promise<Visitor[]>;
 
   /**
    * Gets visitor statistics

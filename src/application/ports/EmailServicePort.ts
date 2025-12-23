@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:25
- * Last Updated: 2025-12-23T07:49:46
+ * Last Updated: 2025-12-23T08:23:51
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -29,7 +29,10 @@ export interface EmailServicePort {
    * @param _contactInfo The contact information of the recipient
    * @param _productName The name of the product they're interested in
    */
-  sendWelcomeEmail(_contactInfo: ContactInfo, _productName: string): Promise<void>;
+  sendWelcomeEmail(
+    _contactInfo: ContactInfo,
+    _productName: string
+  ): Promise<void>;
 
   /**
    * Sends a contact form submission notification
@@ -38,7 +41,7 @@ export interface EmailServicePort {
    */
   sendContactNotification(
     _contactInfo: ContactInfo,
-    _additionalData?: Record<string, any>
+    _additionalData?: Record<string, unknown>
   ): Promise<void>;
 
   /**

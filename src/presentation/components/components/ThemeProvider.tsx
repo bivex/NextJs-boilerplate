@@ -17,11 +17,13 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+import { logError } from '@/utils/errors';
+
 type Theme = 'light' | 'dark' | 'system';
 
 interface ThemeContextType {
   theme: Theme;
-  // eslint-disable-next-line no-unused-vars
+
   setTheme: (_newTheme: Theme) => void;
   resolvedTheme: 'light' | 'dark';
 }
@@ -67,8 +69,14 @@ export function ThemeProvider({
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setTheme(stored as Theme);
       }
-    } catch {
-      // Silently handle localStorage errors
+    } catch (error) {
+      // Handle localStorage errors (e.g., disabled in incognito mode)
+      logError(
+        error instanceof Error
+          ? error
+          : new Error('Failed to read theme from localStorage'),
+        'ThemeProvider.loadTheme'
+      );
     }
   }, [isClient, storageKey]);
 
@@ -110,8 +118,14 @@ export function ThemeProvider({
       if (isClient) {
         try {
           localStorage.setItem(storageKey, newTheme);
-        } catch {
-          // Silently handle localStorage errors
+        } catch (error) {
+          // Handle localStorage errors (e.g., disabled in incognito mode)
+          logError(
+            error instanceof Error
+              ? error
+              : new Error('Failed to save theme to localStorage'),
+            'ThemeProvider.setTheme'
+          );
         }
       }
     },

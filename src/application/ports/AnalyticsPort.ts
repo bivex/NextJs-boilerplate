@@ -45,7 +45,7 @@ export interface AnalyticsPort {
     visitorId: string;
     source: string;
     value?: number;
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
   }): Promise<void>;
 
   /**
