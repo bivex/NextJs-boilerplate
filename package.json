@@ -31,6 +31,7 @@
   },
   "scripts": {
     "dev": "next dev --turbo",
+    "dev:spotlight": "concurrently \"next dev --turbo\" \"npx @spotlightjs/spotlight\"",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
@@ -92,6 +93,7 @@
     "@radix-ui/react-visually-hidden": "^1.2.4",
     "@radix-ui/themes": "^3.2.1",
     "@sentry/nextjs": "^10.32.1",
+    "@spotlightjs/spotlight": "^4.8.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
@@ -116,6 +118,7 @@
     "@typescript-eslint/parser": "^8.50.1",
     "abort-controller": "^3.0.0",
     "autoprefixer": "^10.4.23",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.1",
     "eslint-config-prettier": "^10.1.8",
