@@ -38,7 +38,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <RadixButton
         ref={ref}
         disabled={isDisabled}
-        className={`min-h-[44px] ${props.className || ''}`}
+        className={`min-h-[44px] min-w-[44px] ${props.className || ''}`}
+        suppressHydrationWarning
         {...props}
       >
         {loading && (

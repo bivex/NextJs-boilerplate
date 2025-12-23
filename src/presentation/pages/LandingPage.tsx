@@ -152,7 +152,7 @@ const LandingPage = memo(() => {
         onButtonClick={handleButtonClick}
       />
 
-      <div className="container relative z-10 mx-auto px-6 py-16">
+      <div className="container relative z-10 mx-auto px-6 py-20">
         <HeroSection
           productName={productDisplayName.replace('Boilerplate', '')}
           productDescription={productDescription}
@@ -166,7 +166,7 @@ const LandingPage = memo(() => {
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
               Interactive Components
             </h2>
-            <p className="mx-auto max-w-4xl text-lg text-gray-600">
+            <p className="mx-auto max-w-96 text-lg text-gray-600">
               Explore our component library built with Radix UI and Emotion
             </p>
           </div>
@@ -250,14 +250,14 @@ const LandingPage = memo(() => {
         <footer className="mt-20 border-t border-gray-200/50 pt-16">
           <div className="text-center">
             <div className="mb-4 flex items-center justify-center space-x-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-blue-700">
                 <Zap className="h-5 w-5 text-white" />
               </div>
               <span className="text-xl font-bold text-gray-900">
                 {product?.name || 'NextBoilerplate'}
               </span>
             </div>
-            <p className="mx-auto mb-16 max-w-3xl text-gray-600">
+            <p className="mx-auto mb-16 max-w-96 text-gray-600">
               Built with modern web technologies for enterprise applications.
               Open source and ready for production.
             </p>
@@ -315,7 +315,7 @@ const HeroSection = memo(
         <h1 className="mb-6 bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-5xl font-bold leading-tight text-transparent md:text-7xl">
           {productName}
           <br />
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-4xl text-transparent md:text-6xl">
+          <span className="bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-4xl text-transparent md:text-6xl">
             Boilerplate
           </span>
         </h1>
@@ -326,7 +326,7 @@ const HeroSection = memo(
           <Button
             size="3"
             variant="solid"
-            className="transform bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl"
+            className="transform bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-blue-600 hover:to-blue-800 hover:shadow-xl"
             onClick={() => onButtonClick('hero_get_started_free')}
           >
             Get Started Free
@@ -374,7 +374,7 @@ const Navigation = memo(
       <div className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 to-blue-700">
               <Zap className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900">
@@ -406,7 +406,7 @@ const Navigation = memo(
             <Button
               size="3"
               variant="solid"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
               onClick={() => onButtonClick('nav_get_started')}
             >
               Get Started
@@ -427,11 +427,11 @@ const TechStackSection = memo(() => (
       <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
         Built with Modern Tech Stack
       </h2>
-      <p className="mx-auto max-w-4xl text-lg text-gray-600">
+      <p className="mx-auto max-w-96 text-lg text-gray-600">
         Built with the latest versions of modern web technologies
       </p>
     </div>
-    <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
       <div className="group transform rounded-2xl border border-white/20 bg-white/80 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 transition-transform duration-300 group-hover:scale-110">
           <span className="text-2xl">⚛️</span>
@@ -500,7 +500,7 @@ const FeaturesSection = memo(
         </p>
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-3">
+      <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-3">
         {product?.featuredFeatures?.map(feature => (
           <div
             key={feature.id}
@@ -556,10 +556,10 @@ const ContactForm = memo(
     };
 
     return (
-      <div className="mx-auto max-w-64">
+      <div className="mx-auto max-w-80">
         <Button
           onClick={() => onButtonClick('open_contact_dialog')}
-          className="transform bg-gradient-to-r from-purple-600 to-blue-600 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-purple-700 hover:to-blue-700 hover:shadow-xl"
+          className="transform bg-gradient-to-r from-purple-500 to-blue-600 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-purple-600 hover:to-blue-700 hover:shadow-xl"
           size="3"
           variant="solid"
           disabled={isSubmitting}
@@ -632,7 +632,7 @@ const ContactForm = memo(
             type="submit"
             disabled={isSubmitting || !formData.email.trim()}
             variant="solid"
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </Button>
