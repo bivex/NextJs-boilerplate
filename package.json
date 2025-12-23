@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "if [ -f .next/dev/lock ]; then rm .next/dev/lock; fi && run-p dev:*",
     "dev:next": "next dev --turbo",
-    "dev:spotlight": "spotlight --smart",
+    "dev:spotlight": "spotlight",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",

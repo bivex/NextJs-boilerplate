@@ -13,7 +13,7 @@
  * Commercial licensing available upon request.
  */
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 // Initialize Sentry first
 if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
@@ -21,7 +21,7 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     tracesSampleRate: 1.0,
     // Enable Spotlight capture (optional, mostly dev)
-    spotlight: process.env.NODE_ENV === "development",
+    spotlight: process.env.NODE_ENV === 'development',
     // Additional client-side configuration
     environment: process.env.NODE_ENV,
     replaysOnErrorSampleRate: 1.0,
@@ -36,14 +36,14 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
 }
 
 // Initialize Spotlight after Sentry (only in development)
-// Note: Spotlight initialization temporarily disabled due to SDK compatibility issues
-// TODO: Re-enable once SDK export structure is clarified
-// if (process.env.NODE_ENV === 'development') {
-//   import('@spotlightjs/spotlight/sdk').then((spotlight) => {
-//     if (spotlight.init) {
-//       spotlight.init();
-//     }
-//   }).catch((error) => {
-//     console.warn('Failed to initialize Spotlight:', error);
-//   });
-// }
+if (process.env.NODE_ENV === 'development') {
+  import('@spotlightjs/spotlight/sdk')
+    .then(spotlight => {
+      if (spotlight.init) {
+        spotlight.init();
+      }
+    })
+    .catch(error => {
+      console.warn('Failed to initialize Spotlight:', error);
+    });
+}
