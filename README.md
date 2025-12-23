@@ -72,12 +72,14 @@ A modern, production-ready Next.js boilerplate featuring TypeScript, Emotion, Ra
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/bivex/next-boilerplate.git
    cd next-boilerplate
    ```
 
 2. **Install dependencies**
+
    ```bash
    # Using Bun (recommended for speed)
    bun install
@@ -90,6 +92,7 @@ A modern, production-ready Next.js boilerplate featuring TypeScript, Emotion, Ra
    ```
 
 3. **Start development server**
+
    ```bash
    # Using Bun
    bun dev
@@ -109,16 +112,18 @@ A modern, production-ready Next.js boilerplate featuring TypeScript, Emotion, Ra
 This boilerplate uses a **modern styling approach** combining Radix UI Themes with Tailwind CSS:
 
 #### Radix UI Themes for Components
+
 ```tsx
-<Flex align="center" justify="between" p="4" className="bg-white rounded-lg shadow-md">
+<Flex align="center" justify="between" p="4" className="rounded-lg bg-white shadow-md">
   <Heading size="4">Title</Heading>
   <Button variant="solid">Action</Button>
 </Flex>
 ```
 
 #### Tailwind CSS for Custom Styling
+
 ```tsx
-<div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-md">
+<div className="flex items-center justify-between rounded-lg bg-white p-4 shadow-md">
   <h2 className="text-xl font-semibold text-gray-900">Title</h2>
   <Button className="bg-blue-600 hover:bg-blue-700">Action</Button>
 </div>
@@ -157,6 +162,7 @@ import { Button, Dialog, TextField, Select, Checkbox, RadioGroup } from '@radix-
 ```
 
 #### Available Components
+
 - **Form Controls**: Button, TextField, TextArea, Select, Checkbox, RadioGroup
 - **Layout**: Box, Flex, Grid, Container, Section
 - **Navigation**: Tabs, DropdownMenu, ContextMenu
@@ -175,16 +181,12 @@ function MyComponent() {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>
-        Open Dialog
-      </Button>
+      <Button onClick={() => setIsOpen(true)}>Open Dialog</Button>
 
       <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Content>
           <Dialog.Title>Confirm Action</Dialog.Title>
-          <Dialog.Description>
-            Are you sure you want to proceed?
-          </Dialog.Description>
+          <Dialog.Description>Are you sure you want to proceed?</Dialog.Description>
 
           <Flex direction="column" gap="4" mt="4">
             <Text>This action cannot be undone.</Text>
@@ -195,9 +197,7 @@ function MyComponent() {
                 </Button>
               </Dialog.Close>
               <Dialog.Close>
-                <Button variant="solid">
-                  Confirm
-                </Button>
+                <Button variant="solid">Confirm</Button>
               </Dialog.Close>
             </Flex>
           </Flex>
@@ -213,6 +213,7 @@ function MyComponent() {
 The theme system uses **Radix UI Themes 3.0** with comprehensive design tokens:
 
 #### Theme Provider Setup
+
 ```tsx
 // app/layout.tsx
 import { Theme } from '@radix-ui/themes';
@@ -231,6 +232,7 @@ export default function RootLayout({ children }) {
 ```
 
 #### Available Theme Features
+
 - **30+ Accessible Color Scales** - From gray to vibrant colors
 - **Responsive Object Syntax** - Mobile-first responsive design
 - **CSS Custom Properties** - Runtime theme switching
@@ -239,6 +241,7 @@ export default function RootLayout({ children }) {
 - **Layout Engine** - Flex, Grid, and responsive utilities
 
 #### Using Theme Colors
+
 ```tsx
 // Automatic theme colors
 <Button color="blue" variant="solid">Primary Action</Button>
@@ -255,6 +258,7 @@ export default function RootLayout({ children }) {
 This boilerplate includes a comprehensive testing setup:
 
 ### Unit Tests
+
 ```bash
 # Run all tests
 npm test
@@ -270,14 +274,14 @@ npm run test:ci
 ```
 
 ### Component Testing with Testing Library
+
 ```tsx
 // Component testing with Radix UI Themes
 import { render, screen } from '@testing-library/react';
 import { Theme } from '@radix-ui/themes';
 import { Button } from '@radix-ui/themes';
 
-const renderWithTheme = (component) =>
-  render(<Theme>{component}</Theme>);
+const renderWithTheme = component => render(<Theme>{component}</Theme>);
 
 describe('Button', () => {
   it('renders with theme correctly', () => {
@@ -288,6 +292,7 @@ describe('Button', () => {
 ```
 
 ### Example Test
+
 ```tsx
 // src/components/Button.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -318,20 +323,20 @@ describe('Button', () => {
 
 ## 📜 Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server with Turbopack |
-| `npm run build` | Build for production |
-| `npm run build:analyze` | Build with bundle analyzer |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint issues automatically |
-| `npm run lint:strict` | Run ESLint with zero warnings |
-| `npm run type-check` | Run TypeScript type checking |
-| `npm run test` | Run Jest tests |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run format` | Format code with Prettier |
-| `npm run clean` | Clean build artifacts and caches |
+| Command                 | Description                             |
+| ----------------------- | --------------------------------------- |
+| `npm run dev`           | Start development server with Turbopack |
+| `npm run build`         | Build for production                    |
+| `npm run build:analyze` | Build with bundle analyzer              |
+| `npm run start`         | Start production server                 |
+| `npm run lint`          | Run ESLint                              |
+| `npm run lint:fix`      | Fix ESLint issues automatically         |
+| `npm run lint:strict`   | Run ESLint with zero warnings           |
+| `npm run type-check`    | Run TypeScript type checking            |
+| `npm run test`          | Run Jest tests                          |
+| `npm run test:coverage` | Run tests with coverage report          |
+| `npm run format`        | Format code with Prettier               |
+| `npm run clean`         | Clean build artifacts and caches        |
 
 ### Bun Commands
 
@@ -349,6 +354,7 @@ bun run lint   # Run linting
 ### Next.js Configuration
 
 The `next.config.mjs` includes optimizations for:
+
 - **Image optimization** with next/image
 - **Bundle analysis** with webpack-bundle-analyzer
 - **Compression** and caching headers
@@ -358,6 +364,7 @@ The `next.config.mjs` includes optimizations for:
 ### TypeScript Configuration
 
 Strict TypeScript setup with:
+
 - **Path mapping** (`@/components`, `@/lib`, etc.)
 - **Strict mode** enabled
 - **ESNext modules** support
@@ -366,6 +373,7 @@ Strict TypeScript setup with:
 ### ESLint Configuration
 
 Comprehensive linting with:
+
 - **Next.js rules**
 - **TypeScript rules**
 - **React hooks rules**
@@ -388,6 +396,7 @@ Comprehensive linting with:
 ### Other Platforms
 
 #### Netlify
+
 ```bash
 # Build command
 npm run build
@@ -397,6 +406,7 @@ npm run build
 ```
 
 #### Railway / Render
+
 ```bash
 # Build command
 npm run build
@@ -406,6 +416,7 @@ npm start
 ```
 
 #### Docker
+
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app
@@ -416,6 +427,50 @@ RUN npm run build
 EXPOSE 3000
 CMD ["npm", "start"]
 ```
+
+## 🐛 Error Monitoring & Debugging
+
+This boilerplate includes **Sentry integration** with **Spotlight** for comprehensive error tracking and local debugging.
+
+### Sentry + Spotlight Setup
+
+1. **Get your Sentry DSN**
+   - Create a project at [sentry.io](https://sentry.io)
+   - Copy your DSN from Project Settings > Client Keys
+
+2. **Configure Environment Variables**
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Edit `.env.local`:
+
+   ```env
+   SENTRY_DSN=https://your-dsn@sentry.io/project-id
+   NEXT_PUBLIC_SENTRY_DSN=https://your-dsn@sentry.io/project-id
+   ```
+
+3. **Run with Spotlight (Development)**
+
+   ```bash
+   npm run dev:spotlight
+   ```
+
+   This starts both your Next.js app and Spotlight's debugging overlay.
+
+4. **Features**
+   - **Production Error Tracking**: Automatic error reporting to Sentry
+   - **Local Debugging**: Spotlight overlay shows errors in real-time during development
+   - **Performance Monitoring**: Request tracing and performance metrics
+   - **Session Replays**: User interaction recordings for debugging
+
+### Development vs Production
+
+- **Development**: Spotlight overlay appears for real-time debugging
+- **Production**: Errors are sent to Sentry dashboard only
+
+For detailed setup instructions, see the [Sentry Next.js docs](https://docs.sentry.io/platforms/javascript/guides/nextjs/) and [Spotlight docs](https://spotlightjs.com/).
 
 ## 🤝 Contributing
 
