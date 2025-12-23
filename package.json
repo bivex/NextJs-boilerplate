@@ -30,7 +30,7 @@
     "bun": ">=1.0.0"
   },
   "scripts": {
-    "dev": "if [ -f .next/dev/lock ]; then rm .next/dev/lock; fi && run-p dev:*",
+    "dev": "if [ -f .next/dev/lock ]; then rm .next/dev/lock; fi && lsof -ti:3000 | xargs kill -9 2>/dev/null || true && run-p dev:*",
     "dev:next": "next dev --turbo",
     "dev:spotlight": "spotlight",
     "build": "next build",

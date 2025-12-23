@@ -15,7 +15,7 @@
 
 import * as Sentry from '@sentry/nextjs';
 
-// Initialize Sentry first
+// Initialize Sentry with Spotlight enabled
 if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -33,17 +33,4 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
       }),
     ],
   });
-}
-
-// Initialize Spotlight after Sentry (only in development)
-if (process.env.NODE_ENV === 'development') {
-  import('@spotlightjs/spotlight/sdk')
-    .then(spotlight => {
-      if (spotlight.init) {
-        spotlight.init();
-      }
-    })
-    .catch(error => {
-      console.warn('Failed to initialize Spotlight:', error);
-    });
 }

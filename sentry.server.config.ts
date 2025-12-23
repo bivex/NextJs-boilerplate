@@ -13,14 +13,14 @@
  * Commercial licensing available upon request.
  */
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0,
     // Enable Spotlight capture (optional, mostly dev)
-    spotlight: process.env.NODE_ENV === "development",
+    spotlight: process.env.NODE_ENV === 'development',
     // Additional server-side configuration
     environment: process.env.NODE_ENV,
   });
