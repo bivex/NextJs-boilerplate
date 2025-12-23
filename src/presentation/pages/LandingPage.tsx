@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:52:13
- * Last Updated: 2025-12-23T07:13:56
+ * Last Updated: 2025-12-23T07:33:24
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -22,7 +22,7 @@
 
 'use client';
 
-import { useState, useCallback, memo, lazy, Suspense, useMemo } from 'react';
+import React, { useState, useCallback, memo, lazy, Suspense, useMemo } from 'react';
 import { Button } from '../components/components';
 import { SimpleThemeSwitcher } from '../components/components/ThemeSwitcher';
 import { useLandingPage } from '../hooks/useLandingPage';
@@ -135,7 +135,7 @@ const LandingPage = memo(function LandingPage() {
       <BackgroundDecorations />
       <Navigation productName={productDisplayName} onButtonClick={handleButtonClick} />
 
-      <div className="relative z-10 container mx-auto px-8 py-12">
+      <div className="relative z-10 container mx-auto px-6 py-16">
         <HeroSection
         productName={productDisplayName.replace('Boilerplate', '')}
         productDescription={productDescription}
@@ -164,7 +164,7 @@ const LandingPage = memo(function LandingPage() {
               <div className="flex flex-wrap gap-4 justify-center mb-8">
                 <Button
                   variant="solid"
-                  size="2"
+                  size="3"
                   className="shadow-md hover:shadow-lg transition-shadow"
                   onClick={() => handleButtonClick('demo_primary_small')}
                 >
@@ -172,7 +172,7 @@ const LandingPage = memo(function LandingPage() {
                 </Button>
                 <Button
                   variant="solid"
-                  size="2"
+                  size="3"
                   className="shadow-md hover:shadow-lg transition-shadow"
                   onClick={() => handleButtonClick('demo_primary_medium')}
                 >
@@ -191,7 +191,7 @@ const LandingPage = memo(function LandingPage() {
               <div className="flex flex-wrap gap-4 justify-center mb-8">
                 <Button
                   variant="soft"
-                  size="2"
+                  size="3"
                   className="shadow-md hover:shadow-lg transition-shadow"
                   onClick={() => handleButtonClick('demo_secondary')}
                 >
@@ -199,7 +199,7 @@ const LandingPage = memo(function LandingPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  size="2"
+                  size="3"
                   className="shadow-md hover:shadow-lg transition-shadow border-2"
                   onClick={() => handleButtonClick('demo_outline')}
                 >
@@ -345,7 +345,7 @@ const Navigation = memo(({
   onButtonClick: (buttonName: string) => void;
 }) => (
   <nav className="relative z-10 border-b border-white/20 bg-white/80 backdrop-blur-sm">
-    <div className="container mx-auto px-4 py-3">
+    <div className="container mx-auto px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
@@ -451,7 +451,7 @@ const FeaturesSection = memo(({
   product,
   onFeatureHover
 }: {
-  product: { featuredFeatures?: Array<{ id: string; name: string; description: string; icon?: string | undefined }> } | null;
+  product: { featuredFeatures?: Array<{ id: string; name: string; description: string; icon?: string | undefined }> } | null | undefined;
   onFeatureHover: (featureId: string, featureName: string) => void;
 }) => (
   <section id="features" className="mb-20">
@@ -517,7 +517,7 @@ const ContactForm = memo(function ContactForm({ onSubmit, isSubmitting, result, 
     <div className="max-w-sm mx-auto">
       <Button
         onClick={() => onButtonClick('open_contact_dialog')}
-        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+        className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
         size="3"
         variant="solid"
         disabled={isSubmitting}

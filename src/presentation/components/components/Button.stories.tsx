@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:58:47
- * Last Updated: 2025-12-23T06:13:01
+ * Last Updated: 2025-12-23T07:31:25
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -33,11 +33,11 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      options: ['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'],
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg', 'icon'],
+      options: ['1', '2', '3', '4'],
     },
     loading: {
       control: 'boolean',
@@ -61,12 +61,12 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <Button variant="default">Default</Button>
-      <Button variant="destructive">Destructive</Button>
+      <Button variant="classic">Classic</Button>
+      <Button variant="solid">Solid</Button>
+      <Button variant="soft">Soft</Button>
+      <Button variant="surface">Surface</Button>
       <Button variant="outline">Outline</Button>
-      <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
     </div>
   ),
 };
@@ -74,12 +74,10 @@ export const Variants: Story = {
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-4">
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-      <Button size="icon">
-        <Mail className="h-4 w-4" />
-      </Button>
+      <Button size="1">Size 1</Button>
+      <Button size="2">Size 2</Button>
+      <Button size="3">Size 3</Button>
+      <Button size="4">Size 4</Button>
     </div>
   ),
 };

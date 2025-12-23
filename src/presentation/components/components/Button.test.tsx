@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:58:47
- * Last Updated: 2025-12-23T06:13:01
+ * Last Updated: 2025-12-23T07:31:25
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -32,7 +32,7 @@ describe('Button', () => {
   });
 
   it('applies correct variants', () => {
-    render(<Button variant="destructive">Delete</Button>);
+    render(<Button variant="solid">Delete</Button>);
     const button = screen.getByText('Delete');
 
     // Radix UI themes applies its own classes for variants

@@ -6,16 +6,17 @@
  * For up-to-date contact information:
  * https://github.com/bivex
  *
- * Created: 2025-12-23T06:13:29
- * Last Updated: 2025-12-23T07:31:25
+ * Created: 2025-12-23T07:33:25
+ * Last Updated: 2025-12-23T07:38:06
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
-import React from 'react';
-import LandingPage from '../presentation/pages/LandingPage'
+import { router, publicProcedure } from './init';
 
-export default function Home() {
-  return <LandingPage />
-}
+export const appRouter = router({
+  greeting: publicProcedure.query(() => 'Hello from tRPC!'),
+});
+
+export type AppRouter = typeof appRouter;

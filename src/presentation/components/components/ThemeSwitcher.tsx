@@ -78,15 +78,15 @@ export function SimpleThemeSwitcher() {
 
   const getIcon = () => {
     switch (theme) {
-      case 'light': return <Sun className="h-4 w-4" />;
-      case 'dark': return <Moon className="h-4 w-4" />;
-      case 'system': return <Monitor className="h-4 w-4" />;
-      default: return <Sun className="h-4 w-4" />;
+      case 'light': return <Sun className="h-5 w-5" />;
+      case 'dark': return <Moon className="h-5 w-5" />;
+      case 'system': return <Monitor className="h-5 w-5" />;
+      default: return <Sun className="h-5 w-5" />;
     }
   };
 
   return (
-    <Button variant="ghost" size="1" onClick={cycleTheme} title={`Current: ${theme} - Click to cycle`}>
+    <Button variant="ghost" size="2" onClick={cycleTheme} title={`Current: ${theme} - Click to cycle`}>
       {getIcon()}
     </Button>
   );

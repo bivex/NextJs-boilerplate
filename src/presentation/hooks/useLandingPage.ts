@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:12:51
- * Last Updated: 2025-12-23T06:12:51
+ * Last Updated: 2025-12-23T07:33:23
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -17,45 +17,36 @@
  * Presentation Hook: useLandingPage
  *
  * React hook that provides landing page functionality to components.
- * This hook acts as the interface between the presentation layer and application layer.
+ * This hook uses tRPC for type-safe API communication with the backend.
  */
 
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { DisplayLandingPageUseCase } from '../../application/use-cases/DisplayLandingPageUseCase';
-import { ConvertVisitorUseCase } from '../../application/use-cases/ConvertVisitorUseCase';
-import { TrackEngagementUseCase } from '../../application/use-cases/TrackEngagementUseCase';
-import { DependencyInjection } from '../../infrastructure/config/DependencyInjection';
+import { useMemo } from 'react';
+import { trpc } from '@/lib/trpc/client';
 import { ProductSummaryDto } from '../../application/dtos/ProductDto';
-import { VisitorDto, ContactFormDto, ConversionResultDto } from '../../application/dtos/VisitorDto';
-import { EngagementEventDto } from '../../application/use-cases/TrackEngagementUseCase';
+import { ContactFormDto, ConversionResultDto } from '../../application/dtos/VisitorDto';
 import { AnalyticsEventType } from '../../domain/value-objects/AnalyticsEvent';
 
 interface UseLandingPageReturn {
   // Data
   product: ProductSummaryDto | null;
-  visitor: VisitorDto | null;
+  visitor: any | null;
   isLoading: boolean;
-  error: string | null;
+  error: any;
 
   // Actions
-  trackEngagement: (event: Omit<EngagementEventDto, 'pageUrl'>) => Promise<void>;
+  trackEngagement: (event: {
+    type: AnalyticsEventType;
+    elementId?: string;
+    elementName?: string;
+    metadata?: Record<string, any>;
+  }) => Promise<void>;
   convertVisitor: (contactData: ContactFormDto) => Promise<ConversionResultDto>;
-  refreshData: () => Promise<void>;
+  refreshData: () => void;
 }
 
 export function useLandingPage(): UseLandingPageReturn {
-  const [product, setProduct] = useState<ProductSummaryDto | null>(null);
-  const [visitor, setVisitor] = useState<VisitorDto | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Get use cases directly (DI handles lazy initialization)
-  const displayUseCase = DependencyInjection.getDisplayLandingPageUseCase();
-  const convertUseCase = DependencyInjection.getConvertVisitorUseCase();
-  const trackUseCase = DependencyInjection.getTrackEngagementUseCase();
-
   // Memoized session ID to avoid repeated sessionStorage access
   const sessionId = useMemo(() => {
     if (typeof window === 'undefined') return 'server-session';
@@ -68,96 +59,84 @@ export function useLandingPage(): UseLandingPageReturn {
     return storedSessionId;
   }, []);
 
-  // Load landing page data
-  const loadLandingPageData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  // Get landing page data
+  const pageUrl = typeof window !== 'undefined' ? window.location.href : '/';
+  const {
+    data: landingPageData,
+    isLoading,
+    error,
+    refetch: refreshData
+  } = trpc.visitor.displayLandingPage.useQuery({
+    sessionId,
+    pageUrl
+  });
 
-      const pageUrl = typeof window !== 'undefined' ? window.location.href : '/';
+  // Track engagement mutation
+  const trackEngagementMutation = trpc.visitor.trackEngagement.useMutation();
 
-      const result = await displayUseCase.execute(sessionId, pageUrl);
-
-      // Batch state updates to minimize re-renders
-      setProduct(result.product);
-      setVisitor(result.visitor);
-      setIsLoading(false);
-    } catch (err) {
-      console.error('Failed to load landing page data:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load data');
-      setIsLoading(false);
-    }
-  }, [displayUseCase, sessionId]);
-
-  // Load data on mount
-  useEffect(() => {
-    loadLandingPageData();
-  }, [loadLandingPageData]);
-
-  // Safety timeout to prevent infinite loading
-  useEffect(() => {
-    if (isLoading) {
-      const timeout = setTimeout(() => {
-        console.warn('Loading timeout reached, setting loading to false');
-        setIsLoading(false);
-        setError('Loading timeout - please refresh the page');
-      }, 10000); // 10 second timeout
-
-      return () => clearTimeout(timeout);
-    }
-    // No cleanup needed when not loading
-    return () => {};
-  }, [isLoading]);
+  // Convert visitor mutation
+  const convertVisitorMutation = trpc.visitor.convert.useMutation({
+    onSuccess: () => {
+      // Refresh data after successful conversion
+      refreshData();
+    },
+  });
 
   // Track engagement events
-  const trackEngagement = useCallback(async (event: Omit<EngagementEventDto, 'pageUrl'>) => {
+  const trackEngagement = async (event: {
+    type: AnalyticsEventType;
+    elementId?: string;
+    elementName?: string;
+    metadata?: Record<string, any>;
+  }) => {
     try {
       const pageUrl = typeof window !== 'undefined' ? window.location.href : '/';
 
-      await trackUseCase.execute(sessionId, {
-        ...event,
-        pageUrl
+      await trackEngagementMutation.mutateAsync({
+        sessionId,
+        type: event.type,
+        elementId: event.elementId,
+        elementName: event.elementName,
+        pageUrl,
+        metadata: event.metadata,
       });
     } catch (err) {
       console.error('Failed to track engagement:', err);
       // Don't set error state for tracking failures
     }
-  }, [trackUseCase, sessionId]);
+  };
 
   // Convert visitor
-  const convertVisitor = useCallback(async (contactData: ContactFormDto): Promise<ConversionResultDto> => {
+  const convertVisitor = async (contactData: ContactFormDto): Promise<ConversionResultDto> => {
     try {
-      const result = await convertUseCase.execute(sessionId, contactData);
-
-      // Refresh visitor data after conversion
-      if (result.success) {
-        await loadLandingPageData();
-      }
+      const result = await convertVisitorMutation.mutateAsync({
+        sessionId,
+        name: contactData.name,
+        email: contactData.email,
+        message: contactData.message,
+        company: contactData.company,
+        source: contactData.source,
+      });
 
       return result;
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to convert visitor:', err);
       return {
         success: false,
         visitorId: '',
-        message: err instanceof Error ? err.message : 'Conversion failed',
+        message: err?.message || 'Conversion failed',
         nextSteps: []
       };
     }
-  }, [convertUseCase, sessionId, loadLandingPageData]);
-
-  // Refresh data
-  const refreshData = useCallback(async () => {
-    await loadLandingPageData();
-  }, [loadLandingPageData]);
+  };
 
   return {
-    product,
-    visitor,
+    product: landingPageData?.product ?? null,
+    visitor: landingPageData?.visitor ?? null,
     isLoading,
     error,
     trackEngagement,
     convertVisitor,
-    refreshData
+    refreshData: () => refreshData()
   };
 }

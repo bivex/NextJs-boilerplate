@@ -7,15 +7,17 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:13:29
- * Last Updated: 2025-12-23T06:20:53
+ * Last Updated: 2025-12-23T07:33:10
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
  */
 
+import React from 'react';
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeWrapper } from './ThemeWrapper'
+import { TRPCProvider } from '@/lib/trpc/provider'
 import './globals.css'
 import '@radix-ui/themes/styles.css'
 
@@ -35,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeWrapper>{children}</ThemeWrapper>
+        <TRPCProvider>
+          <ThemeWrapper>{children}</ThemeWrapper>
+        </TRPCProvider>
       </body>
     </html>
   )

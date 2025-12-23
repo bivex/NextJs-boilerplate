@@ -45,13 +45,13 @@ function ThemeContent({
               <SimpleThemeSwitcher />
               <Link
                 href="/test-error"
-                className="text-white no-underline hover:underline"
+                className="text-white no-underline hover:underline px-2 py-1 min-h-[44px] flex items-center"
               >
                 Test Errors (Spotlight)
               </Link>
               <Link
                 href="/"
-                className="text-white no-underline hover:underline"
+                className="text-white no-underline hover:underline px-2 py-1 min-h-[44px] flex items-center"
               >
                 Home
               </Link>

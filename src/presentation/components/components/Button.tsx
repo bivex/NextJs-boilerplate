@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T05:36:55
- * Last Updated: 2025-12-23T06:13:00
+ * Last Updated: 2025-12-23T07:31:24
  * Migrated to Radix Themes 3.0: 2025-12-23
  *
  * Licensed under the MIT License.
@@ -24,6 +24,7 @@ export interface ButtonProps extends React.ComponentProps<typeof RadixButton> {
   loading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  size?: '1' | '2' | '3' | '4';
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(

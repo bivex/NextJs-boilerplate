@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T07:50:00
- * Last Updated: 2025-12-23T06:54:03
+ * Last Updated: 2025-12-23T07:31:25
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -16,8 +16,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/presentation/components/components/Button';
-import { ErrorBoundary } from '@/presentation/components/components/ErrorBoundary';
+import { Button } from '../../presentation/components/components/Button';
+import { ErrorBoundary } from '../../presentation/components/components/ErrorBoundary';
 import {
   AppError,
   ValidationError,
@@ -28,7 +28,7 @@ import {
   safeExecute,
   withErrorLogging,
   logError,
-} from '@/utils/errors';
+} from '../../utils/errors';
 
 interface ErrorLog {
   timestamp: Date;
