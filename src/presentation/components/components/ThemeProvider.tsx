@@ -7,7 +7,7 @@
  * https://github.com/bivex
  *
  * Created: 2025-12-23T06:45:00
- * Last Updated: 2025-12-23T07:49:47
+ * Last Updated: 2025-12-23T08:06:25
  *
  * Licensed under the MIT License.
  * Commercial licensing available upon request.
@@ -21,7 +21,8 @@ type Theme = 'light' | 'dark' | 'system';
 
 interface ThemeContextType {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  // eslint-disable-next-line no-unused-vars
+  setTheme: (_newTheme: Theme) => void;
   resolvedTheme: 'light' | 'dark';
 }
 
@@ -46,26 +47,39 @@ export function ThemeProvider({
   defaultTheme = 'system',
   storageKey = 'theme',
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Load theme from localStorage on initialization
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [isClient, setIsClient] = useState(false);
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+
+  // Set isClient to true on mount
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsClient(true);
+  }, []);
+
+  // Load theme from localStorage on client side
+  useEffect(() => {
+    if (!isClient) return;
+
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored && ['light', 'dark', 'system'].includes(stored)) {
-        return stored as Theme;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setTheme(stored as Theme);
       }
-    } catch (error) {
-      console.warn('Failed to load theme from localStorage:', error);
+    } catch {
+      // Silently handle localStorage errors
     }
-    return defaultTheme;
-  });
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+  }, [isClient, storageKey]);
 
   useEffect(() => {
     const updateResolvedTheme = () => {
       let resolved: 'light' | 'dark';
 
       if (theme === 'system') {
-        resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        resolved = window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
       } else {
         resolved = theme;
       }
@@ -92,15 +106,19 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: (newTheme: Theme) => {
-      try {
-        localStorage.setItem(storageKey, newTheme);
-      } catch (error) {
-        console.warn('Failed to save theme to localStorage:', error);
-      }
       setTheme(newTheme);
+      if (isClient) {
+        try {
+          localStorage.setItem(storageKey, newTheme);
+        } catch {
+          // Silently handle localStorage errors
+        }
+      }
     },
     resolvedTheme,
   };
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
